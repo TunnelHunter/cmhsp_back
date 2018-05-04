@@ -14,6 +14,5 @@ public interface TiRepository extends MongoRepository <Ti,String> {
 //   // public Ti findByShiti_name(String shiti_name);
 //    public Ti findByExamination_No(String Examination_No);
 //   // public Ti findById(String id);
-    public Ti findByExamination(String Examination);
-
+    public Ti findByExaminationId(String ExaminationId);
 }

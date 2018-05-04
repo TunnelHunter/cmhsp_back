@@ -1,6 +1,7 @@
 package cn.psychology.concroller;
 
 
+import cn.psychology.Impl.TiImpl;
 import cn.psychology.dao.TiRepository;
 import cn.psychology.entity.Ti;
 import cn.psychology.service.TiService;
@@ -15,20 +16,26 @@ import java.util.List;
 @RestController
 public class TiController {
     @Autowired
-    private TiService tiService;
-    
+    private TiImpl tiimpl;
+
     @RequestMapping(value="/ti/{id}", produces = "application/json; charset=UTF-8")
     public Ti findone(@PathVariable String id) {
-        Ti ti = tiService.findByExamination("1");
+        Ti ti = tiimpl.findByExaminationId(id);
+       // System.out.println(ti.getQuestionsMessage().get(0).getQuestionOptions().get(0).getOption().getOptionName());
         return ti;
 
     }
 
     @RequestMapping("/ti/all")
-    public List<Ti> findall(@PathVariable String id) {
-        List<Ti> list = tiService.findAll();
+    public List<Ti> findall() {
+        List<Ti> list = tiimpl.findAll();
         return list;
 
     }
-
+    @RequestMapping("ti/insert")
+    public String insert(){
+        String Str = "";
+    //    tiimpl.insertTi(Str);
+        return "yes";
+    }
 }

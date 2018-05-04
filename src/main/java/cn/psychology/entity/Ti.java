@@ -1,4 +1,4 @@
- package cn.psychology.entity;
+package cn.psychology.entity;
 
 import org.bson.types.ObjectId;
 import org.hibernate.annotations.Entity;
@@ -11,141 +11,178 @@ import java.io.Serializable;
 import java.util.*;
 
 
- @Document(collection="TestCollection")
-public class Ti  implements Serializable {
+@Document(collection = "TestCollection")
+public class Ti implements Serializable {
 
     @Id
     private String id;
 
-    @Field("examination")
-        private String examination;
+    //    @Field("examination")
+//        private String examination;
+//    @Field("examinationName")
+//       private String examinationName;
+//    @Field("Question_List")
+//        private ArrayList<obj> Question_ListObj;
+//    @Field("Answer")
+//     private ArrayList<obja> Answer;
+//
+//
+//
+//     public class obj{
+//         String Questionid;
+//        String Question;
+//        String AnswerOne;
+//        String AnswerTwo;
+//        String AnswerThree;
+//        String AnswerFour;
+//
+//
+//    }
+//    public class obja{
+//
+//        String Optionid;
+//        String Optioncontent;
+//
+//    }
+    @Field("examinationId")
+    private String examinationId;
+
+
     @Field("examinationName")
-       private String examinationName;
-    @Field("Question_List")
-        private ArrayList<obj> Question_ListObj;
-    @Field("Answer")
-     private ArrayList<obja> Answer;
+    private String examinationName;
+    @Field("questionsMessage")
+    private ArrayList<QueMessage> questionsMessage;
+    @Field("questionsConclusion")
+    private ArrayList<QueConclusion> questionsConclusion;
 
-     public String getId() {
-         return id;
-     }
-
-     public void setId(String id) {
-         this.id = id;
-     }
-
-     public String getExamination() {
-         return examination;
-     }
-
-     public void setExamination(String examination) {
-         this.examination = examination;
-     }
-
-     public String getexaminationName() {
-         return examinationName;
-     }
-
-     public void setexaminationName(String Name) {
-         examinationName = Name;
-     }
-
-     public ArrayList<obj> getQuestion_ListObj() {
-         return Question_ListObj;
-     }
-
-     public void setQuestion_ListObj(ArrayList<obj> question_ListObj) {
-         Question_ListObj = question_ListObj;
-     }
-
-     public ArrayList<obja> getAnswer() {
-         return Answer;
-     }
-
-     public void setAnswer(ArrayList<obja> answer) {
-         Answer = answer;
-     }
-
-     public class obj{
-         String Questionid;
-        String Question;
-        String AnswerOne;
-        String AnswerTwo;
-        String AnswerThree;
-        String AnswerFour;
-
-        public String getQuestion_id() {
-            return Questionid;
-        }
-
-        public void setQuestion_d(String questionid) {
-            Questionid = questionid;
-        }
-
-        public String getQuestion() {
-            return Question;
-        }
-
-        public void setQuestion(String question) {
-            Question = question;
-        }
-
-        public String getAnswerOne() {
-            return AnswerOne;
-        }
-
-        public void setAnswerOne(String answerOne) {
-            AnswerOne = answerOne;
-        }
-
-        public String getAnswerTwo() {
-            return AnswerTwo;
-        }
-
-        public void setAnswerTwo(String answerTwo) {
-            AnswerTwo = answerTwo;
-        }
-
-        public String getAnswerThree() {
-            return AnswerThree;
-        }
-
-        public void setAnswerThree(String answerThree) {
-            AnswerThree = answerThree;
-        }
-
-        public String getAnswerFour() {
-            return AnswerFour;
-        }
-
-        public void setAnswerFour(String answerFour) {
-            AnswerFour = answerFour;
-        }
+    public String getId() {
+        return id;
     }
-    public class obja{
-        public String getOptionid() {
-            return Optionid;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getExaminationId() {
+        return examinationId;
+    }
+
+    public void setExaminationId(String examinationId) {
+        this.examinationId = examinationId;
+    }
+
+    public String getExaminationName() {
+        return examinationName;
+    }
+
+    public void setExaminationName(String examinationName) {
+        this.examinationName = examinationName;
+    }
+
+    public ArrayList<QueMessage> getQuestionsMessage() {
+        return questionsMessage;
+    }
+
+    public void setQuestionsMessage(ArrayList<QueMessage> questionsMessage) {
+        this.questionsMessage = questionsMessage;
+    }
+
+    public ArrayList<QueConclusion> getQuestionsConclusion() {
+        return questionsConclusion;
+    }
+
+    public void setQuestionsConclusion(ArrayList<QueConclusion> questionsConclusion) {
+        this.questionsConclusion = questionsConclusion;
+    }
+
+    public class QueMessage {
+        @Field("questionId")
+        String questionId;
+
+        @Field("questionName")
+        String questionName;
+        @Field("questionOptions")
+        ArrayList<ObjOption> questionOptions;
+        public String getQuestionId() {
+            return questionId;
         }
 
-        public void setOptionid(String optionid) {
-            Optionid = optionid;
+        public void setQuestionId(String questionId) {
+            this.questionId = questionId;
         }
 
-        public String getOptioncontent() {
-            return Optioncontent;
+        public String getQuestionName() {
+            return questionName;
         }
 
-        public void setOptioncontent(String optioncontent) {
-            Optioncontent = optioncontent;
+        public void setQuestionName(String questionName) {
+            this.questionName = questionName;
         }
 
-        String Optionid;
-        String Optioncontent;
+        public ArrayList<ObjOption> getQuestionOptions() {
+            return questionOptions;
+        }
+
+        public void setQuestionOptions(ArrayList<ObjOption> questionOptions) {
+            this.questionOptions = questionOptions;
+        }
+
+        public class ObjOption{
+                @Field("optionName")
+                String optionName;
+
+                public ObjOption(String optionName) {
+                    this.optionName = optionName;
+                }
+
+                public String getOptionName() {
+                    return optionName;
+                }
+
+                public void setOptionName(String optionName) {
+                    this.optionName = optionName;
+                }
+            }
+
+
 
     }
 
-     public Ti() {
-     }
+    public class QueConclusion {
+        String conclusionId;
+        String scoreRange;
+        String queConclusion;
+
+        public String getConclusionId() {
+            return conclusionId;
+        }
+
+        public void setConclusionId(String conclusionId) {
+            this.conclusionId = conclusionId;
+        }
+
+        public String getScoreRange() {
+            return scoreRange;
+        }
+
+        public void setScoreRange(String scoreRange) {
+            this.scoreRange = scoreRange;
+        }
+
+        public String getQueConclusion() {
+            return queConclusion;
+        }
+
+        public void setQueConclusion(String queConclusion) {
+            this.queConclusion = queConclusion;
+        }
 
 
- }
+    }
+
+
+
+    public Ti() {
+    }
+
+}
