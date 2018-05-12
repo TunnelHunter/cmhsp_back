@@ -21,6 +21,8 @@ public class User {
     private String region;
     //个性签名
     private String signature;
+    //头像图片地址
+    private String imageAddre;
 
     public String getUserpwd() {
         return userpwd;
@@ -76,6 +78,14 @@ public class User {
 
     public void setSignature(String signature) {
         this.signature = signature;
+    }
+
+    public String getImageAddre() {
+        return imageAddre;
+    }
+
+    public void setImageAddre(String imageAddre) {
+        this.imageAddre = imageAddre;
     }
 }
 

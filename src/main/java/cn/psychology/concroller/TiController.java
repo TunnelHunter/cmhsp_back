@@ -6,6 +6,7 @@ import cn.psychology.dao.TiRepository;
 import cn.psychology.entity.Ti;
 import cn.psychology.service.TiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +36,18 @@ public class TiController {
     @RequestMapping("ti/insert")
     public String insert(){
         String Str = "";
-    //    tiimpl.insertTi(Str);
+        //tiimpl.insertTi(Str);
         return "yes";
     }
+    @RequestMapping(value = "/ti/count",produces = "application/json;charset=UTF-8")
+    public int Count(){
+        int Res = 0;
+        try {
+             Res = tiimpl.count();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Res;
+    }
+
 }

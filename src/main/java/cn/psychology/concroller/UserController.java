@@ -27,8 +27,37 @@ public class UserController {
 
     @GetMapping(value = "/register/{name}&{pwd}")
     public String Register(@PathVariable String name, @PathVariable String pwd) {
-        String Res = userService.CheckLogin(name, pwd);
-        return Res;
+        boolean bool = userService.CheckLogin(name, pwd);
+        if (bool == true){
+            User user = new User();
+            user.setUsername(name);
+            user.setUserpwd(pwd);
+            userService.save(user);
+            return "用户："+name+"注册成功";
+        }else{
+            return "用户："+name+"已被注册";
+        }
+    }
+    @GetMapping(value = "/register/{name}&{pwd}&{nick}&{sign}&{sex}&{region}")
+    public String Register(@PathVariable String name, @PathVariable String pwd,@PathVariable String nick,
+                           @PathVariable String sign,@PathVariable String sex,@PathVariable String region,
+                           @PathVariable String imageaddr
+                           ) {
+        boolean bool = userService.CheckLogin(name, pwd);
+        if (bool == true){
+            User user = new User();
+            user.setUsername(name);
+            user.setUserpwd(pwd);
+            user.setRegion(region);
+            user.setSex(sex);
+            user.setUsernickname(nick);
+            user.setImageAddre(imageaddr);
+            user.setSignature(sign);
+            userService.save(user);
+            return "用户："+name+"注册成功";
+        }else{
+            return "用户："+name+"已被注册";
+        }
     }
 }
 

@@ -1,7 +1,7 @@
 package cn.psychology.service;
 
-import cn.psychology.Util.EncodePwd;
 import cn.psychology.dao.UserRepository;
+import cn.psychology.entity.Ti;
 import cn.psychology.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,20 +22,23 @@ public class UserService {
     }
 
     //注册方法
-    public String CheckLogin(String userName, String userPassword) {
+    public boolean CheckLogin(String userName, String userPassword) {
         User user = new User();
         if (userRepository.findByUsername(userName) == null) {
-
+            //可被注册
             //对密码进行加密
             // EncodePwd encode = new EncodePwd();
             // String userPasswordcoded = encode.EncoderByMd5(userPassword);
-            user.setUsername(userName);
-            user.setUserpwd(userPassword);
-            userRepository.save(user);
-            return "用户名  " + userName + " 注册成功";
+            return true;
         } else {
-            return "用户名 " + userName + "已被占用";
+            //用户名已经存在
+            return false;
         }
+    }
+
+
+    public void save(User obj) {
+        userRepository.save(obj);
     }
 
     //登陆

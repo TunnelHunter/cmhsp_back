@@ -6,6 +6,8 @@ import cn.psychology.service.TiService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -42,6 +44,13 @@ public class TiImpl implements TiService {
     }
     public List<Ti> findAll(){
         return mongoTemplate.findAll(Ti.class);
+        //return tiRepository.findAll();
+    }
+    public int count() throws Exception {
+        long size = tiRepository.count();
+        //System.out.println("-----------"+size+"-------------");
+        int count = Integer.valueOf(String.valueOf(size));
+        return count;
     }
 
 

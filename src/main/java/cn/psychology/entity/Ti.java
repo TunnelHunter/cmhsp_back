@@ -130,19 +130,30 @@ public class Ti implements Serializable {
         public class ObjOption{
                 @Field("optionName")
                 String optionName;
+                @Field("optionValue")
+                String optionValue;
 
-                public ObjOption(String optionName) {
-                    this.optionName = optionName;
-                }
+            public ObjOption(String optionName, String optionValue) {
+                this.optionName = optionName;
+                this.optionValue = optionValue;
+            }
 
-                public String getOptionName() {
+            public String getOptionName() {
                     return optionName;
                 }
 
                 public void setOptionName(String optionName) {
                     this.optionName = optionName;
                 }
+
+            public String getOptionValue() {
+                return optionValue;
             }
+
+            public void setOptionValue(String optionValue) {
+                this.optionValue = optionValue;
+            }
+        }
 
 
 
