@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.*;
 
 
-@Document(collection = "TestCollection")
+@Document(collection = "ExaminationONE")
 public class Ti implements Serializable {
 
     @Id
@@ -128,29 +128,29 @@ public class Ti implements Serializable {
         }
 
         public class ObjOption{
-                @Field("optionName")
-                String optionName;
-                @Field("optionValue")
-                String optionValue;
+            @Field("optionName")
+            String optionName;
+            @Field("optionValue")
+            Integer optionValue;
 
-            public ObjOption(String optionName, String optionValue) {
+            public ObjOption(String optionName,Integer optionValue) {
                 this.optionName = optionName;
                 this.optionValue = optionValue;
             }
 
             public String getOptionName() {
-                    return optionName;
-                }
+                return optionName;
+            }
 
-                public void setOptionName(String optionName) {
-                    this.optionName = optionName;
-                }
+            public void setOptionName(String optionName) {
+                this.optionName = optionName;
+            }
 
-            public String getOptionValue() {
+            public Integer getOptionValue() {
                 return optionValue;
             }
 
-            public void setOptionValue(String optionValue) {
+            public void setOptionValue(Integer optionValue) {
                 this.optionValue = optionValue;
             }
         }
@@ -161,7 +161,8 @@ public class Ti implements Serializable {
 
     public class QueConclusion {
         String conclusionId;
-        String scoreRange;
+        Integer scoreRange;
+        String summary;
         String queConclusion;
 
         public String getConclusionId() {
@@ -172,12 +173,19 @@ public class Ti implements Serializable {
             this.conclusionId = conclusionId;
         }
 
-        public String getScoreRange() {
+        public Integer getScoreRange() {
             return scoreRange;
         }
 
-        public void setScoreRange(String scoreRange) {
+        public void setScoreRange(Integer scoreRange) {
             this.scoreRange = scoreRange;
+        }
+        public String getSummary() {
+            return summary;
+        }
+
+        public void setSummary(String summary) {
+            this.summary = summary;
         }
 
         public String getQueConclusion() {
