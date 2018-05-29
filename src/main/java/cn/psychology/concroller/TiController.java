@@ -22,7 +22,7 @@ public class TiController {
     @RequestMapping(value="/ti/{id}", produces = "application/json; charset=UTF-8")
     public Ti findone(@PathVariable String id) {
         Ti ti = tiimpl.findByExaminationId(id);
-       // System.out.println(ti.getQuestionsMessage().get(0).getQuestionOptions().get(0).getOption().getOptionName());
+        System.out.println(ti.getQuestionsMessage());
         return ti;
 
     }
