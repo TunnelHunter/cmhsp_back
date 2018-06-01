@@ -1,10 +1,11 @@
 package cn.psychology.Impl;
 
-import cn.psychology.dao.TiRepository;
-import cn.psychology.entity.Ti;
-import cn.psychology.service.TiService;
+import cn.psychology.dao.TestRepository;
+import cn.psychology.entity.ExamPaper;
+import cn.psychology.service.TestService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,22 +17,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TiImpl implements TiService {
+public class TestImpl implements TestService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private TiRepository tiRepository;
+    private TestRepository testRepository;
 
 
 
-    public Ti findByExaminationId(String examinationId) {
+    public ExamPaper findByExaminationId(String examinationId) {
         Query query = new Query(Criteria.where("examinationId").is(examinationId));
-        Ti ti = mongoTemplate.findOne(query, Ti.class);
+        ExamPaper ti = mongoTemplate.findOne(query, ExamPaper.class);
         return ti;
     }
 
-    public void saveTi(Ti ti) {
+    public void saveTi(ExamPaper ti) {
         mongoTemplate.save(ti);
     }
     public void insertTi(String Str){
@@ -42,12 +43,12 @@ public class TiImpl implements TiService {
         mongoTemplate.insert(parseObject,"TestCollection");
 
     }
-    public List<Ti> findAll(){
-        return mongoTemplate.findAll(Ti.class);
+    public List<ExamPaper> findAll(){
+        return mongoTemplate.findAll(ExamPaper.class);
         //return tiRepository.findAll();
     }
     public int count() throws Exception {
-        long size = tiRepository.count();
+        long size = testRepository.count();
         //System.out.println("-----------"+size+"-------------");
         int count = Integer.valueOf(String.valueOf(size));
         return count;

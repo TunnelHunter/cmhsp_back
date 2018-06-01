@@ -1,8 +1,7 @@
 package cn.psychology.service;
 
 
-import cn.psychology.dao.TiRepository;
-import cn.psychology.entity.Ti;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import java.io.Serializable;
 import java.util.List;
 
 
-public interface TiService {
+public interface TestService {
 //    @Autowired
 //    private MongoTemplate mongoTemplate;
 //

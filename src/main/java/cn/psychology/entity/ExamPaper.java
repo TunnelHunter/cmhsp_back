@@ -12,11 +12,17 @@ import java.util.*;
 
 
 @Document(collection = "ExaminationONE")
-public class Ti implements Serializable {
+public class ExamPaper implements Serializable {
+
+    /*
+    * ------------------------------------------------------------------------------------------------------------------
+    * 试题信息，存储在MongoDB中。
+    * 分别有，试题id，试题名称，问题列表，答案，总结等
+    * ------------------------------------------------------------------------------------------------------------------
+    * */
 
     @Id
     private String id;
-
     //    @Field("examination")
 //        private String examination;
 //    @Field("examinationName")
@@ -201,7 +207,6 @@ public class Ti implements Serializable {
 
 
 
-    public Ti() {
-    }
+
 
 }

@@ -6,6 +6,11 @@ import javax.persistence.*;
 @Entity
 @Table(name="user")
 public class User {
+    /*
+     * ------------------------------------------------------------------------------------------------------------------
+     * 用户表
+     * ------------------------------------------------------------------------------------------------------------------
+     * */
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer userid;
@@ -23,6 +28,8 @@ public class User {
     private String signature;
     //头像图片地址
     private String imageAddre;
+    //用户注册时间
+    private String userRegTime;
 
     public String getUserpwd() {
         return userpwd;
@@ -86,6 +93,14 @@ public class User {
 
     public void setImageAddre(String imageAddre) {
         this.imageAddre = imageAddre;
+    }
+
+    public String getUserRegTime() {
+        return userRegTime;
+    }
+
+    public void setUserRegTime(String userRegTime) {
+        this.userRegTime = userRegTime;
     }
 }
 
