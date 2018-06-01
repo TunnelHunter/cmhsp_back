@@ -1,7 +1,6 @@
 package cn.psychology.service;
 
 import cn.psychology.dao.UserRepository;
-import cn.psychology.entity.Ti;
 import cn.psychology.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
