@@ -1,11 +1,13 @@
 package cn.psychology.concroller;
 
 
+import ch.qos.logback.classic.pattern.SyslogStartConverter;
 import cn.psychology.Impl.TestImpl;
 import cn.psychology.Util.JsonUtil;
 import cn.psychology.dao.ScoreRepository;
 import cn.psychology.entity.ExamPaper;
 import cn.psychology.entity.Score;
+import cn.psychology.entity.User;
 import com.alibaba.fastjson.JSON;
 import net.minidev.json.JSONUtil;
 import org.json.JSONArray;
@@ -41,14 +43,27 @@ public class TestController {
 
     public  String findall() {
         List<ExamPaper> list = tiimpl.findAll();
+        System.out.println(list);
        // return "";
         return jsonUtil.JsonPackage(0,list);
 
     }
+    @RequestMapping(value = "/CMHSP/examinationsResults",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
+
+    public  String setScore(@RequestBody Score score) {
+
+
+
+                 scoreRepository.save(score);
+         return jsonUtil.JsonPackage(0,"successful");
+        //return jsonUtil.JsonPackage(0,list);
+
+    }
+
     @RequestMapping("ti/insert")
     public String insert(){
         String Str = "";
-        //tiimpl.insertTi(Str);
+        tiimpl.insertTi(Str);
         return "yes";
     }
     @RequestMapping(value = "/ti/count",produces = "application/json;charset=UTF-8")
@@ -61,12 +76,7 @@ public class TestController {
         }
         return Res;
     }
-    @RequestMapping(value="/getscore/{id}", produces = "application/json; charset=UTF-8")
-    public String  findoneScore(@PathVariable String id) {
-        Score score = scoreRepository.findOne(id);
 
-        return score.getScore();
-    }
     @RequestMapping(value="/score", produces = "application/json; charset=UTF-8")
     public List<Score>  findoneScore() {
         //Score score = scoreRepository.findOne(id);
@@ -74,19 +84,27 @@ public class TestController {
         return score;
     }
     @RequestMapping(value="/setscore",method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public String  findoneScore(@RequestBody List vmHostlist, HttpServletRequest request) {
-
-
-
-//        Score sc = new Score();
+    public String  findoneScore(@RequestBody JSONObject vmHost, HttpServletRequest request) {
+        Score sc = new Score();
 //        sc.setScoreId(id);
 //        sc.setScore(score);
 //        sc.setExamId(examid);
 //        sc.setTestTime(time);
-//        scoreRepository.save(sc);
+        scoreRepository.save(sc);
 
 
         return "okay";
     }
 
+
+    @RequestMapping(value="/CMHSP/test",method = RequestMethod.POST, produces = "application/json")
+    public String  test(@RequestBody Score score) {
+
+
+        String in  = score.getUserId();
+        String inn = score.getExaminationScore();
+        score.setScoreId(2);
+        scoreRepository.save(score);
+        return in + inn;
+    }
 }
