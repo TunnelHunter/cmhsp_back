@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.*;
 
 
-@Document(collection = "ExaminationONE")
+@Document(collection = "TestCollection")
 public class ExamPaper implements Serializable {
 
     /*
@@ -56,6 +56,8 @@ public class ExamPaper implements Serializable {
 
     @Field("examinationName")
     private String examinationName;
+    @Field("questionNumber")
+    private String questionNumber;
     @Field("questionsMessage")
     private ArrayList<QueMessage> questionsMessage;
     @Field("questionsConclusion")
@@ -63,6 +65,14 @@ public class ExamPaper implements Serializable {
 
     public String getId() {
         return id;
+    }
+
+    public String getQuestionNumber() {
+        return questionNumber;
+    }
+
+    public void setQuestionNumber(String questionNumber) {
+        this.questionNumber = questionNumber;
     }
 
     public void setId(String id) {

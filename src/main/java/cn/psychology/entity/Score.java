@@ -19,15 +19,15 @@ public class Score {
     // 用户ID
     private String userId;
     // 题ID
-    private String examId;
+    private String examinationId;
     // 此次得分
-    private String score;
+    private String examinationScore;
     //时间戳
     private long testTime;
     //总结
     private String  summary;
 
-    private String conclusion;
+    private String examinationConclusionId;
 
     public Integer getScoreId() {
         return scoreId;
@@ -45,20 +45,20 @@ public class Score {
         this.userId = userId;
     }
 
-    public String getExamId() {
-        return examId;
+    public String getExaminationId() {
+        return examinationId;
     }
 
-    public void setExamId(String examId) {
-        this.examId = examId;
+    public void setExaminationId(String examinationId) {
+        this.examinationId = examinationId;
     }
 
-    public String getScore() {
-        return score;
+    public String getExaminationScore() {
+        return examinationScore;
     }
 
-    public void setScore(String score) {
-        this.score = score;
+    public void setExaminationScore(String examinationScore) {
+        this.examinationScore = examinationScore;
     }
 
     public long getTestTime() {
@@ -77,11 +77,11 @@ public class Score {
         this.summary = summary;
     }
 
-    public String getConclusion() {
-        return conclusion;
+    public String getExaminationConclusionId() {
+        return examinationConclusionId;
     }
 
-    public void setConclusion(String conclusion) {
-        this.conclusion = conclusion;
+    public void setExaminationConclusionId(String examinationConclusionId) {
+        this.examinationConclusionId = examinationConclusionId;
     }
 }

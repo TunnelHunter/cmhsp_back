@@ -31,6 +31,9 @@ public class User {
     //用户注册时间
     private String userRegTime;
 
+    //系统消息是否已读
+    private int hasread;
+
     public String getUserpwd() {
         return userpwd;
     }
@@ -101,6 +104,14 @@ public class User {
 
     public void setUserRegTime(String userRegTime) {
         this.userRegTime = userRegTime;
+    }
+
+    public int getHasread() {
+        return hasread;
+    }
+
+    public void setHasread(int hasread) {
+        this.hasread = hasread;
     }
 }
 
