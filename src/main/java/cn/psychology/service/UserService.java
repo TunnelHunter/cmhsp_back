@@ -48,4 +48,8 @@ public class UserService {
             return "oh sorry user name or password is wrong";
         }
     }
+    //
+    public User FindbyUserName(String name){
+        return userRepository.findByUsername(name);
+    }
 }

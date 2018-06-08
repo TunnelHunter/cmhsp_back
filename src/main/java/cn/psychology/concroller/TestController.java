@@ -12,12 +12,15 @@ import com.alibaba.fastjson.JSON;
 import net.minidev.json.JSONUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 
@@ -28,6 +31,8 @@ public class TestController {
     private TestImpl tiimpl;
     @Autowired
     private ScoreRepository scoreRepository;
+    @Autowired
+    private TestImpl testimpl;
 
     private JsonUtil jsonUtil = new JsonUtil();
 
@@ -56,6 +61,33 @@ public class TestController {
 
                  scoreRepository.save(score);
          return jsonUtil.JsonPackage(0,"successful");
+        //return jsonUtil.JsonPackage(0,list);
+
+    }
+
+    @RequestMapping(value = "/CMHSP/userHisRecords",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
+
+    public  String getHisRecords(@RequestBody User user) {
+
+
+        String userId = user.getUserid().toString();
+        List<Score> list =  scoreRepository.findAllByUserId(userId);
+        JSONArray jsonArray = new JSONArray();
+        for( int i=0;i<list.size();i++ ){
+            JSONObject jsonObject = new JSONObject();
+            Score score = list.get(i);
+            ExamPaper examPaper = testimpl.findByExaminationId(score.getExaminationId());
+            int index = Integer.parseInt(score.getExaminationConclusionId());
+            jsonObject.put("testType",score.getTestType());
+            jsonObject.put("testId",score.getScoreId());
+            jsonObject.put("testScore",score.getExaminationScore());
+            jsonObject.put("summary",examPaper.getQuestionsConclusion().get( index-1 ).getSummary());  //  -1: conclusionId -1 = 数组下标
+            jsonObject.put("time",score.getTestTime());
+            jsonObject.put("conclusion",examPaper.getQuestionsConclusion().get( index-1 ).getQueConclusion());
+            jsonArray.put(jsonObject);
+        }
+
+        return jsonUtil.JsonPackage(0,jsonArray);
         //return jsonUtil.JsonPackage(0,list);
 
     }
@@ -98,13 +130,17 @@ public class TestController {
 
 
     @RequestMapping(value="/CMHSP/test",method = RequestMethod.POST, produces = "application/json")
-    public String  test(@RequestBody Score score) {
+//    public String  test(@RequestBody LinkedHashMap<String,Object> ob) {
+    public String  test(@RequestBody com.alibaba.fastjson.JSONObject ob) {
 
 
-        String in  = score.getUserId();
-        String inn = score.getExaminationScore();
-        score.setScoreId(2);
-        scoreRepository.save(score);
-        return in + inn;
+        com.alibaba.fastjson.JSONObject jb = ob;
+
+        String str  = jb.get("userId").toString();
+        String str2  = jb.get("examinationScore").toString();
+
+        //scoreRepository.save(ob);
+        System.out.println(str+"  ----------   "+str2);
+        return jsonUtil.JsonPackage(0,"successful");
     }
 }

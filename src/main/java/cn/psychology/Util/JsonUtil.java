@@ -1,5 +1,6 @@
 package cn.psychology.Util;
 
+
 import org.json.JSONObject;
 
 public  class JsonUtil {
@@ -10,8 +11,11 @@ public  class JsonUtil {
             jsonObject.append("data",object);
         }else{
             jsonObject.append("error_code",1);
-            jsonObject.append("data","there is something error " );
+            jsonObject.append("data","something error" );
         }
         return jsonObject.toString() ;
     }
+
+
+
 }

@@ -2,6 +2,7 @@
 package cn.psychology.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="user")
@@ -13,7 +14,7 @@ public class User {
      * */
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer userid;
+    private int userid;
     //用户名
     private String username;
     //密码
@@ -31,8 +32,12 @@ public class User {
     //用户注册时间
     private String userRegTime;
 
-    //系统消息是否已读
-    private int hasread;
+    //权限
+    private String roles;
+
+
+
+
 
     public String getUserpwd() {
         return userpwd;
@@ -46,7 +51,7 @@ public class User {
         return userid;
     }
 
-    public void setUserid(Integer userid) {
+    public void setUserid(int userid) {
         this.userid = userid;
     }
 
@@ -106,12 +111,28 @@ public class User {
         this.userRegTime = userRegTime;
     }
 
-    public int getHasread() {
-        return hasread;
+
+
+    public String getRoles() {
+        return roles;
     }
 
-    public void setHasread(int hasread) {
-        this.hasread = hasread;
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+//    //此构造器用于回应前台字段据该情况。 当传入一个username，则给每一个属性都赋值："无修改"。
+//    public User(String username) {
+//        this.username = username;
+//        this.region = "无修改";
+//        this.userpwd = "无修改";
+//        this.imageAddre = "无修改";
+//        this.sex = "无修改";
+//        this.usernickname = "无修改";
+//        this.signature = "无修改";
+//    }
+
+    public User() {
     }
 }
 
