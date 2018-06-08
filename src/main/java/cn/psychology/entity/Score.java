@@ -10,7 +10,7 @@ public class Score {
     /*
      * ------------------------------------------------------------------------------------------------------------------
      * 成绩表，存储在Mysql中。
-     * 分别有，id（主键），userid，examid，score，summary，sonslusion
+     * 分别有，id（主键），userid，examid，score，summary，conslusion,testType
      * ------------------------------------------------------------------------------------------------------------------
      * */
     @Id
@@ -28,6 +28,8 @@ public class Score {
     private String  summary;
 
     private String examinationConclusionId;
+
+    private String testType;
 
     public Integer getScoreId() {
         return scoreId;
@@ -83,5 +85,13 @@ public class Score {
 
     public void setExaminationConclusionId(String examinationConclusionId) {
         this.examinationConclusionId = examinationConclusionId;
+    }
+
+    public String getTestType() {
+        return testType;
+    }
+
+    public void setTestType(String testType) {
+        this.testType = testType;
     }
 }
