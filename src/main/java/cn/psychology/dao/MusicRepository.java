@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface MusicRepository extends MongoRepository<Music,String> {
     List<Music> findAllByMusicsceneId(String id);
+    Music findAllBySongid(String id);
 
 }
 
