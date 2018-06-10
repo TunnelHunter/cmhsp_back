@@ -19,7 +19,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -33,6 +37,9 @@ public class TestController {
     private ScoreRepository scoreRepository;
     @Autowired
     private TestImpl testimpl;
+
+    @PersistenceContext
+    private EntityManager entitymanager;
 
     private JsonUtil jsonUtil = new JsonUtil();
 
@@ -70,7 +77,7 @@ public class TestController {
     public  String getHisRecords(@RequestBody User user) {
 
 
-        String userId = user.getUserid().toString();
+        String userId = Integer.toString(user.getUserId());
         List<Score> list =  scoreRepository.findAllByUserId(userId);
         JSONArray jsonArray = new JSONArray();
         for( int i=0;i<list.size();i++ ){
@@ -88,6 +95,60 @@ public class TestController {
         }
 
         return jsonUtil.JsonPackage(0,jsonArray);
+        //return jsonUtil.JsonPackage(0,list);
+
+    }
+    @RequestMapping(value = "/CMHSP/userAnalysis",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
+
+    public  String getScoreAnalysis(@RequestBody LinkedHashMap<String,Object> ob ) {
+
+        String str = JSON.toJSONString(ob);
+        com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
+        String userId = json.get("userId").toString() ;
+
+        List<Score> list =  scoreRepository.findAllByUserId(userId);
+        JSONObject jsonObject = new JSONObject();
+        // testTime 封装
+        ArrayList<String> testTime = new ArrayList<>();
+         for(Score example : list){
+                   int time = (int)example.getTestTime();
+                   String timeStr = Integer.toString(time);
+                   testTime.add(timeStr);
+                }
+
+         //testScore 封装
+        JSONArray jsonArrayScore = new JSONArray();
+        for( int i=0;i<list.size();i++ ){
+            JSONObject jsonObjectScore = new JSONObject();
+            jsonObjectScore.put("examName",testimpl.findByExaminationId(list.get(i).getExaminationId()).getExaminationName());
+            jsonObjectScore.put("score",list.get(i).getExaminationScore());
+            jsonArrayScore.put(jsonObjectScore);
+        }
+        //typeAnaly 封装
+        ArrayList<String > TypeCount= new ArrayList<>();
+        for(Score example : list){
+            if( TypeCount.contains(example.getTestType()) ){
+
+            }else{
+                TypeCount.add(example.getTestType());
+            }
+        }
+
+
+
+        JSONArray jsonArrayScoreByType = new JSONArray();
+        for(String example : TypeCount){
+           List<Score > l =  scoreRepository.findAllByUserIdAndAndTestType(userId,example);
+           JSONObject jsonObjecscoreByType = new JSONObject();
+           jsonObjecscoreByType.put("type",example);
+           jsonObjecscoreByType.put("count",l.size());
+           jsonArrayScoreByType.put(jsonObjecscoreByType);
+        }
+
+        jsonObject.put("typeAnaly",jsonArrayScoreByType);
+        jsonObject.put("testScore",jsonArrayScore);
+        jsonObject.put("testTime",testTime);
+        return jsonUtil.JsonPackage(0,jsonObject);
         //return jsonUtil.JsonPackage(0,list);
 
     }
@@ -141,6 +202,19 @@ public class TestController {
 
         //scoreRepository.save(ob);
         System.out.println(str+"  ----------   "+str2);
-        return jsonUtil.JsonPackage(0,"successful");
+
+
+        //Query query = entitymanager.createNativeQuery(sql);
+        ArrayList<String > TypeCount= new ArrayList<>();
+        List<Score> list =  scoreRepository.findAllByUserId("1");
+        for(Score example : list){
+            if( TypeCount.contains(example.getTestType()) ){
+
+            }else{
+                TypeCount.add(example.getTestType());
+            }
+        }
+
+        return jsonUtil.JsonPackage(0,TypeCount);
     }
 }
