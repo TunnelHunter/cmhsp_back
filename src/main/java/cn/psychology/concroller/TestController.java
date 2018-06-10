@@ -1,7 +1,7 @@
 package cn.psychology.concroller;
 
 
-import ch.qos.logback.classic.pattern.SyslogStartConverter;
+
 import cn.psychology.Impl.TestImpl;
 import cn.psychology.Util.JsonUtil;
 import cn.psychology.dao.ScoreRepository;
@@ -14,7 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -139,10 +138,10 @@ public class TestController {
         JSONArray jsonArrayScoreByType = new JSONArray();
         for(String example : TypeCount){
            List<Score > l =  scoreRepository.findAllByUserIdAndAndTestType(userId,example);
-           JSONObject jsonObjecscoreByType = new JSONObject();
-           jsonObjecscoreByType.put("type",example);
-           jsonObjecscoreByType.put("count",l.size());
-           jsonArrayScoreByType.put(jsonObjecscoreByType);
+           JSONObject jsonObjecScoreByType = new JSONObject();
+            jsonObjecScoreByType.put("type",example);
+            jsonObjecScoreByType.put("count",l.size());
+           jsonArrayScoreByType.put(jsonObjecScoreByType);
         }
 
         jsonObject.put("typeAnaly",jsonArrayScoreByType);
@@ -156,7 +155,7 @@ public class TestController {
     @RequestMapping("ti/insert")
     public String insert(){
         String Str = "";
-        tiimpl.insertTi(Str);
+        //tiimpl.insertTi(Str);
         return "yes";
     }
     @RequestMapping(value = "/ti/count",produces = "application/json;charset=UTF-8")
