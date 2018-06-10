@@ -136,7 +136,7 @@ public final class JwtUserFactory {
         };
         list.add(user.getRoles());
         return new JwtUser(
-                user.getUserid().toString(),
+                Integer.toString(user.getUserId()),
                 user.getUsername(),
                 user.getUserpwd(),
                 mapToGrantedAuthorities(list)

@@ -14,7 +14,7 @@ public class User {
      * */
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int userid;
+    private int userId;
     //用户名
     private String username;
     //密码
@@ -47,12 +47,12 @@ public class User {
         this.userpwd = userpwd;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {

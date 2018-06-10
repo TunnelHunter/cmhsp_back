@@ -25,7 +25,7 @@ public class CombUserSysImpl implements CombUserSysService {
         for(int i = 1;i<=Count;i++){
             User user = userRepository.findOne(i);
             CombUserSysNews combUserSysNews = new CombUserSysNews();
-            combUserSysNews.setUserId(user.getUserid());
+            combUserSysNews.setUserId(user.getUserId());
             combUserSysNews.setSysId(sysnewsid);
             combUserSysNews.setStatus(SysnewsStatus.hasnotRead.getIndex());//weidu
             combineSysRepository.save(combUserSysNews);
