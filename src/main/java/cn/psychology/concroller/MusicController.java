@@ -32,6 +32,8 @@ public class MusicController {
     public RespEntity findmusiclist(@RequestBody Music music) {
         return new RespEntity(RespCode.SUCCESS,musicRepository.findAllByMusicsceneId(music.getMusicsceneId()));
     }
+
+
     //苗哥写的
 //    @RequestMapping("/music/insert")
 //    public String insert(){

@@ -23,23 +23,11 @@ import java.util.List;
 public class SocailController {
     @Autowired
     SocialRepository socialRepository;
-@Autowired
+    @Autowired
     UserRepository userRepository;
     @RequestMapping("/socialFreshDown")//下拉刷新获取最新五条动态
     public RespEntity showsociallist() {
-
-
         List<Social> list1 = socialRepository.findAll();
-//      Social o1 =list1.get(list1.size()-1);
-//        Social o2=list1.get(list1.size()-2);
-//      User u1= userRepository.findAllByUserid(o1.getUserid());
-//        u1.getUsername();
-//        u1.getImageAddre();
-////       Object o1= list1.get(list1.size()-1);
-////       Object o2= list1.get(list1.size()-2);
-////       Object o3= list1.get(list1.size()-3);
-////       Object o4= list1.get(list1.size()-4);
-////       Object o5= list1.get(list1.size()-5);
         Collections.reverse(list1); // 倒序排列
         List<Social> newlist = list1.subList(0, 5);
         JSONArray jsonArray =new JSONArray();
@@ -54,20 +42,69 @@ public class SocailController {
             jsonObject.put("socialaddtime",social.getSocialaddtime());
             jsonObject.put("textdata",social.getTextdata());
             jsonObject.put("imagedata",social.getImagedata());
-            jsonObject.put("comments",social.getComments());
-            jsonArray.add(jsonObject);
+            // 评论包含用户头像姓名的新的对象
+            JSONArray cjsonArray =new JSONArray();
 
+            for(int k=0;k<social.getComments().size();k++){
+                List<Social.Comments> cnewlist =social.getComments();
+                JSONObject cjsonObject=new JSONObject();
+                User cuser =userRepository.findAllByUserId(cnewlist.get(k).getCuserid());
+                cjsonObject.put("cuserid",cuser.getUserId());
+                cjsonObject.put("cusername",cuser.getUsername());
+                cjsonObject.put("cuserimg",cuser.getImageAddre());
+                cjsonObject.put("commentData",cnewlist.get(k).getCommentData());
+                cjsonObject.put("commenttime",cnewlist.get(k).getCommenttime());
+                cjsonArray.add(cjsonObject);
+            }
+            jsonObject.put("comments",cjsonArray);
+            jsonArray.add(jsonObject);
         }
 
-      //  newlist.addAll(u);
         return new RespEntity(RespCode.SUCCESS,jsonArray);
     }
+
+    @RequestMapping("/socialFreshUp")//上拉刷新获取接下来五条动态
+    public RespEntity shownextsociallist(@RequestBody Social social1) {
+        List a = socialRepository.findBySocialidLessThan(social1.getSocialid());
+        Collections.reverse(a); // 倒序排列
+        List<Social> newlist = a.subList(0, 5);
+        JSONArray jsonArray =new JSONArray();
+        for( int i=0;i<5;i++ ){
+            JSONObject jsonObject = new JSONObject();
+            User user1= userRepository.findAllByUserId(newlist.get(i).getUserid());
+            Social social = newlist.get(i);
+            jsonObject.put("userid",user1.getUserId());
+            jsonObject.put("username",user1.getUsername());
+            jsonObject.put("imageAddre",user1.getImageAddre());
+            jsonObject.put("socialid",social.getSocialid());
+            jsonObject.put("socialaddtime",social.getSocialaddtime());
+            jsonObject.put("textdata",social.getTextdata());
+            jsonObject.put("imagedata",social.getImagedata());
+            // 评论包含用户头像姓名的新的对象
+            JSONArray cjsonArray =new JSONArray();
+            for(int k=0;k<social.getComments().size();k++){
+                List<Social.Comments> cnewlist =social.getComments();
+                JSONObject cjsonObject=new JSONObject();
+                User cuser =userRepository.findAllByUserId(cnewlist.get(k).getCuserid());
+                cjsonObject.put("cuserid",cuser.getUserId());
+                cjsonObject.put("cusername",cuser.getUsername());
+                cjsonObject.put("cuserimg",cuser.getImageAddre());
+                cjsonObject.put("commentData",cnewlist.get(k).getCommentData());
+                cjsonObject.put("commenttime",cnewlist.get(k).getCommenttime());
+                cjsonArray.add(cjsonObject);
+            }
+            jsonObject.put("comments",cjsonArray);
+            jsonArray.add(jsonObject);
+        }
+        return  new RespEntity(RespCode.SUCCESS,jsonArray);}
+
+
     @Autowired
     SocialService socialService;
     @RequestMapping("/socialFavorite")//收藏动态
     public RespEntity favoritesocial(@RequestBody com.alibaba.fastjson.JSONObject object1) {
         com.alibaba.fastjson.JSONObject ob1 =object1;
-        String sid =ob1.get("socialid").toString();
+        Integer sid =ob1.getInteger("socialid");
         Integer uid =ob1.getInteger("userid");
         String  uname =ob1.get("username").toString();
         socialService.addsocialtofavorite(uid,uname,sid);
@@ -86,8 +123,8 @@ public class SocailController {
     @RequestMapping("/socialCommentAdd")//发布评论
     public RespEntity addcomment(@RequestBody com.alibaba.fastjson.JSONObject object3) {
         com.alibaba.fastjson.JSONObject ob3 =object3;
-        String cuid =ob3.get("userid").toString();
-        String sid =ob3.get("socialid").toString();
+        Integer cuid =ob3.getInteger("userid");
+        Integer sid =ob3.getInteger("socialid");
         String cd =ob3.get("commentData").toString();
         String ct =ob3.get("commenttime").toString();
         socialService.addcomment(cuid,sid,cd,ct);
