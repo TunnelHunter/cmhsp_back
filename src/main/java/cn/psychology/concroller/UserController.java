@@ -2,15 +2,15 @@
 package cn.psychology.concroller;
 
 import cn.psychology.Impl.CombUserSysImpl;
+import cn.psychology.Impl.FavoriteImpl;
 import cn.psychology.Impl.SysNewsImpl;
 import cn.psychology.Util.JsonUtil;
 import cn.psychology.Util.RespCode;
 import cn.psychology.Util.RespEntity;
+import cn.psychology.Util.SysnewsStatus;
+import cn.psychology.dao.SocialRepository;
 import cn.psychology.dao.UserRepository;
-import cn.psychology.entity.CombUserSysNews;
-import cn.psychology.entity.ExamPaper;
-import cn.psychology.entity.SysNews;
-import cn.psychology.entity.User;
+import cn.psychology.entity.*;
 import cn.psychology.service.UserService;
 import com.alibaba.fastjson.JSON;
 import org.json.JSONArray;
@@ -31,6 +31,10 @@ public class UserController {
     private SysNewsImpl sysNews;
     @Autowired
     private CombUserSysImpl combUserSys;
+    @Autowired
+    private SocialRepository socialRepository;
+    @Autowired
+    private FavoriteImpl favorite;
 
     private JsonUtil jsonUtil = new JsonUtil();
 
@@ -153,32 +157,101 @@ public class UserController {
     public  String usergetmessagecount(@RequestBody LinkedHashMap<String,Object> ob ) {
         String str = JSON.toJSONString(ob);
         com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
-        int userId = Integer.parseInt(json.get("userID").toString()) ;
+        int userId = Integer.parseInt(json.get("userID").toString());
 
         JSONObject resjson = new JSONObject();
 
 
         //系统消息
-        List<CombUserSysNews> list= combUserSys.findHasNotReadByUserid(userId);
+        List<CombUserSysNews> CombUserSysNewslist= combUserSys.findHasNotReadByUserid(userId);
         JSONArray Reslist = new JSONArray();
-        for(CombUserSysNews attribute : list) {
+        for(CombUserSysNews attribute : CombUserSysNewslist) {
             //Reslist.add(sysNews.findOneById((int)attribute.getSysId()));
             Reslist.put(sysNews.findOneById((int)attribute.getSysId()).getContext());
 
         }
-        resjson.put("sysNews",list.size());
+        resjson.put("sysNews",CombUserSysNewslist.size());
 
         //我的评论消息
+        List<Social> socialsList = socialRepository.findAllByUserid(userId);
+        int socialListSize = socialsList.size();
+        JSONArray hasNotReadComments = new JSONArray();
+        ArrayList<Object> hasNotReadCommentss = new ArrayList<>();
+        for( int i=0;i<socialListSize;i++ ){
+            List<Social.Comments> commentsList = socialsList.get(i).getComments();
+            int commentsListSize = commentsList.size();
+            for( int j=0;j<commentsListSize;j++ ){
+                if( commentsList.get(j).getCommenttype().equals(0) ){
+                    JSONObject jsonObject = new JSONObject();
+                    hasNotReadCommentss.add(commentsList.get(j));
+                    //jsonObject.put("commentsCOntext",commentsList.get(j));
+                    //hasNotReadComments.put(jsonObject);
 
+                }
+            }
 
-
-
-
-
+        }
+        resjson.put("comNews",hasNotReadCommentss.size());
+        if( (hasNotReadCommentss.size()!=0)||(CombUserSysNewslist.size()!=0) ){
+            resjson.put("haveNews",1);
+        }else{
+            resjson.put("haveNews",0);
+        }
+        //resjson.put("comNews",hasNotReadComments.length());
         return jsonUtil.JsonPackage(0,resjson);
 
     }
 
+    @RequestMapping(value = "CMHSP/userClearNews",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
+    public String userClearNews(@RequestBody LinkedHashMap<String,Object> ob) {
+        String str = JSON.toJSONString(ob);
+        com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
+        int userId = Integer.parseInt(json.get("userId").toString());
+        int messageType = Integer.parseInt(json.get("messageType").toString());
+        if( messageType == 0 ){
+            //清空系统消息
+            List<CombUserSysNews> CombUserSysNewslist= combUserSys.findHasNotReadByUserid(userId);
+            for(CombUserSysNews attribute : CombUserSysNewslist) {
+                //Reslist.add(sysNews.findOneById((int)attribute.getSysId()));
+                CombUserSysNews combUserSysNews = combUserSys.findById(attribute.getId());
+                combUserSysNews.setStatus(SysnewsStatus.hasRead.getIndex());
+                combUserSys.save(combUserSysNews);
+            }
+
+        }else{
+            //清空评论消息
+
+
+            List<Social> socialsList = socialRepository.findAllByUserid(userId);
+            int socialListSize = socialsList.size();
+            for( int i=0;i<socialListSize;i++ ){
+                Integer dd = socialsList.get(i).getSocialid();
+                //Social social =  socialRepository.findAllBySocialid(socialsList.get(i).getSocialid());
+                Social social =  socialRepository.findAllBySocialid(1);
+                List<Social.Comments> commentsList = socialsList.get(i).getComments();
+                int commentsListSize = commentsList.size();
+                for( int j=0;j<commentsListSize;j++ ){
+                    social.getComments().get(j).setCommenttype(SysnewsStatus.hasRead.getIndex());
+                    socialRepository.save(social);
+                }
+
+            }
+
+
+
+        }
+        JSONObject resjson = new JSONObject();
+        resjson.put("context","clear news  success");
+        return jsonUtil.JsonPackage(0,resjson);
+    }
+    @RequestMapping(value = "/CMHSP/userFavorite",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
+    public String getUserFavorite(@RequestBody User user) {
+
+
+        List<Favorite> reslist = favorite.getFavorite(user.getUserId());
+        return jsonUtil.JsonPackage(0,reslist);
+
+    }
 
 }
 

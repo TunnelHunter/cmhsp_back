@@ -4,6 +4,8 @@ import cn.psychology.entity.Favorite;
 import cn.psychology.entity.Music;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface FavoriteRepository extends MongoRepository<Favorite,String> {
+import java.util.List;
 
+public interface FavoriteRepository extends MongoRepository<Favorite,String> {
+    List<Favorite> findAllByUserid(Integer id);
 }
