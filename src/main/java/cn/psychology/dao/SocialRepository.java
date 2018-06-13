@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface SocialRepository extends MongoRepository<Social,String>{
-    Social findAllBySocialid(String id);
+    Social findAllBySocialid(Integer id);
+    List<Social> findBySocialidLessThan(Integer id);
 
 
 }

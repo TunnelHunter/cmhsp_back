@@ -18,13 +18,15 @@ public class Social {
     @Id
     private String Id;
 
-    private String socialid;
+
+
+    private Integer socialid;
     private Integer userid;
     private String socialaddtime;
     private String imagedata;
     private String textdata;
 
-   private ArrayList<Comments> comments;
+    private ArrayList<Comments> comments;
 
     public ArrayList<Comments> getComments() {
         return comments;
@@ -35,11 +37,11 @@ public class Social {
     }
 
     public class Comments{
-        public String getCuserid() {
+        public Integer getCuserid() {
             return cuserid;
         }
 
-        public void setCuserid(String cuserid) {
+        public void setCuserid(Integer cuserid) {
             this.cuserid = cuserid;
         }
 
@@ -59,7 +61,7 @@ public class Social {
             this.commenttime = commenttime;
         }
         @Field("cuserid")
-        String cuserid;
+        Integer cuserid;
         @Field("commentData")
         String commentData;
         @Field("commenttime")
@@ -77,20 +79,21 @@ public class Social {
     }
 
 
+//
+//    public String getId() {
+//        return Id;
+//    }
+//
+//    public void setId(String id) {
+//        Id = id;
+//    }
 
-    public String getId() {
-        return Id;
-    }
 
-    public void setId(String id) {
-        Id = id;
-    }
-
-    public String getSocialid() {
+    public Integer getSocialid() {
         return socialid;
     }
 
-    public void setSocialid(String socialid) {
+    public void setSocialid(Integer socialid) {
         this.socialid = socialid;
     }
 
