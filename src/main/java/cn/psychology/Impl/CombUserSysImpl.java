@@ -40,7 +40,13 @@ public class CombUserSysImpl implements CombUserSysService {
 
         return list;
     }
-
+    public CombUserSysNews findById(int id){
+        return combineSysRepository.findById(id);
+    }
+    public String save(CombUserSysNews combUserSysNews){
+        combineSysRepository.save(combUserSysNews);
+        return "successful";
+    }
 
 
 }

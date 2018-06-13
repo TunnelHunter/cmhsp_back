@@ -10,6 +10,6 @@ import java.util.List;
 public interface SocialRepository extends MongoRepository<Social,String>{
     Social findAllBySocialid(Integer id);
     List<Social> findBySocialidLessThan(Integer id);
-
+    List<Social> findAllByUserid(Integer id);
 
 }
