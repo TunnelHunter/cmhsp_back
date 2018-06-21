@@ -33,22 +33,7 @@ public class MusicController {
         return new RespEntity(RespCode.SUCCESS,musicRepository.findAllByMusicsceneId(music.getMusicsceneId()));
     }
 
-
-    //苗哥写的
-//    @RequestMapping("/music/insert")
-//    public String insert(){
-//        String Str = "{\n" +
-//                "\n" +
-//                "\t\"musicsceneId\": \"1\",\n" +
-//                "\t\"musicsceneName\": \"民谣\",\n" +
-//                "\t\"songid\": \"5\",\n" +
-//                "\t\"songname\": \"南方姑娘\",\n" +
-//                "\t\"songauthor\": \"赵雷（雷子）\",\n" +
-//                "\t\"songcontext\": \"http://m2.music.126.net/HMu8cIcUjkfOUn6AEb-PWQ==/3133608139215522.mp3\"\n" +
-//                "}";
-//        music.insertTi(Str);
-//        return "yes";
-//    }
+    
     @Autowired
     MusicService musicService;
     @RequestMapping("/musicFavorite")//收藏音乐
