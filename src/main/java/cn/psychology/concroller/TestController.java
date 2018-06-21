@@ -15,6 +15,8 @@ import org.json.JSONObject;
 import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -49,7 +52,7 @@ public class TestController {
         return ti;
 
     }
-
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/CMHSP/examinationsList",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
 
     public  String findall() {
@@ -188,32 +191,35 @@ public class TestController {
         return "okay";
     }
 
-
-    @RequestMapping(value="/CMHSP/test",method = RequestMethod.POST, produces = "application/json")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @RequestMapping(value="/CMHSP/test",method = RequestMethod.GET, produces = "application/json")
 //    public String  test(@RequestBody LinkedHashMap<String,Object> ob) {
-    public String  test(@RequestBody com.alibaba.fastjson.JSONObject ob) {
+   // public String  test(@RequestBody com.alibaba.fastjson.JSONObject ob) {
+    public String  test() {
 
+//        com.alibaba.fastjson.JSONObject jb = ob;
+//
+//        String str  = jb.get("userId").toString();
+//        String str2  = jb.get("examinationScore").toString();
+//
+//        //scoreRepository.save(ob);
+//        System.out.println(str+"  ----------   "+str2);
+//
+//
+//        //Query query = entitymanager.createNativeQuery(sql);
+//        ArrayList<String > TypeCount= new ArrayList<>();
+//        List<Score> list =  scoreRepository.findAllByUserId("1");
+//        for(Score example : list){
+//            if( TypeCount.contains(example.getTestType()) ){
+//
+//            }else{
+//                TypeCount.add(example.getTestType());
+//            }
+//        }
 
-        com.alibaba.fastjson.JSONObject jb = ob;
-
-        String str  = jb.get("userId").toString();
-        String str2  = jb.get("examinationScore").toString();
-
-        //scoreRepository.save(ob);
-        System.out.println(str+"  ----------   "+str2);
-
-
-        //Query query = entitymanager.createNativeQuery(sql);
-        ArrayList<String > TypeCount= new ArrayList<>();
-        List<Score> list =  scoreRepository.findAllByUserId("1");
-        for(Score example : list){
-            if( TypeCount.contains(example.getTestType()) ){
-
-            }else{
-                TypeCount.add(example.getTestType());
-            }
-        }
-
-        return jsonUtil.JsonPackage(0,TypeCount);
+        //return jsonUtil.JsonPackage(0,TypeCount);
+        return new Date().toString();
+        //return new BCryptPasswordEncoder(123).toString();
+       // return "dswswswdwdedrwegthwyjujtegbtr";
     }
 }
