@@ -16,6 +16,8 @@ import com.alibaba.fastjson.JSON;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -65,13 +67,13 @@ public class UserController {
             user.setUserRegTime("");
             user.setRoles("");
             userService.save(user);
-            return "用户："+name+"注册成功";
+            return "用户"+name+"注册成功";
         }else{
             return "用户："+name+"已被注册";
         }
     }
     @RequestMapping(value = "/CMHSP/userUpdate",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
-    public String Register(@RequestBody User user) {
+    public String Update(@RequestBody User user) {
         if( user!= null ){
             //检查是否登录
             boolean bool = userService.CheckLogin(user.getUsername(), user.getUserpwd());
