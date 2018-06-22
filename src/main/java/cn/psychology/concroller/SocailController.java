@@ -29,74 +29,139 @@ public class SocailController {
     public RespEntity showsociallist() {
         List<Social> list1 = socialRepository.findAll();
         Collections.reverse(list1); // 倒序排列
-        List<Social> newlist = list1.subList(0, 5);
-        JSONArray jsonArray =new JSONArray();
-        for( int i=0;i<5;i++ ){
-            JSONObject jsonObject = new JSONObject();
-            User user1= userRepository.findAllByUserId(newlist.get(i).getUserid());
-            Social social = newlist.get(i);
-            jsonObject.put("userid",user1.getUserId());
-            jsonObject.put("username",user1.getUsername());
-            jsonObject.put("imageAddre",user1.getImageAddre());
-            jsonObject.put("socialid",social.getSocialid());
-            jsonObject.put("socialaddtime",social.getSocialaddtime());
-            jsonObject.put("textdata",social.getTextdata());
-            jsonObject.put("imagedata",social.getImagedata());
-            // 评论包含用户头像姓名的新的对象
-            JSONArray cjsonArray =new JSONArray();
-
-            for(int k=0;k<social.getComments().size();k++){
-                List<Social.Comments> cnewlist =social.getComments();
-                JSONObject cjsonObject=new JSONObject();
-                User cuser =userRepository.findAllByUserId(cnewlist.get(k).getCuserid());
-                cjsonObject.put("cuserid",cuser.getUserId());
-                cjsonObject.put("cusername",cuser.getUsername());
-                cjsonObject.put("cuserimg",cuser.getImageAddre());
-                cjsonObject.put("commentData",cnewlist.get(k).getCommentData());
-                cjsonObject.put("commenttime",cnewlist.get(k).getCommenttime());
-                cjsonArray.add(cjsonObject);
+        if(list1.size()>4){
+            List<Social> newlist = list1.subList(0, 5);
+            JSONArray jsonArray =new JSONArray();
+            for( int i=0;i<5;i++ ){
+                JSONObject jsonObject = new JSONObject();
+                User user1= userRepository.findAllByUserId(newlist.get(i).getUserid());
+                Social social = newlist.get(i);
+                jsonObject.put("userid",user1.getUserId());
+                jsonObject.put("username",user1.getUsername());
+                jsonObject.put("imageAddre",user1.getImageAddre());
+                jsonObject.put("socialid",social.getSocialid());
+                jsonObject.put("socialaddtime",social.getSocialaddtime());
+                jsonObject.put("textdata",social.getTextdata());
+                jsonObject.put("imagedata",social.getImagedata());
+                // 评论包含用户头像姓名的新的对象
+                if(social.getComments()==null){jsonObject.put("comments",null);}else{
+                    JSONArray cjsonArray =new JSONArray();
+                    for(int k=0;k<social.getComments().size();k++){
+                        List<Social.Comments> cnewlist =social.getComments();
+                        JSONObject cjsonObject=new JSONObject();
+                        User cuser =userRepository.findAllByUserId(cnewlist.get(k).getCuserid());
+                        cjsonObject.put("cuserid",cuser.getUserId());
+                        cjsonObject.put("cusername",cuser.getUsername());
+                        cjsonObject.put("cuserimg",cuser.getImageAddre());
+                        cjsonObject.put("commentData",cnewlist.get(k).getCommentData());
+                        cjsonObject.put("commenttime",cnewlist.get(k).getCommenttime());
+                        cjsonArray.add(cjsonObject);
+                    }
+                    jsonObject.put("comments",cjsonArray);}
+                jsonArray.add(jsonObject);
             }
-            jsonObject.put("comments",cjsonArray);
-            jsonArray.add(jsonObject);
-        }
-
-        return new RespEntity(RespCode.SUCCESS,jsonArray);
+            return new RespEntity(RespCode.SUCCESS,jsonArray);}
+        else
+        { List<Social> newlist = list1.subList(0, list1.size());
+            JSONArray jsonArray =new JSONArray();
+            for( int i=0;i<list1.size();i++ ){
+                JSONObject jsonObject = new JSONObject();
+                User user1= userRepository.findAllByUserId(newlist.get(i).getUserid());
+                Social social = newlist.get(i);
+                jsonObject.put("userid",user1.getUserId());
+                jsonObject.put("username",user1.getUsername());
+                jsonObject.put("imageAddre",user1.getImageAddre());
+                jsonObject.put("socialid",social.getSocialid());
+                jsonObject.put("socialaddtime",social.getSocialaddtime());
+                jsonObject.put("textdata",social.getTextdata());
+                jsonObject.put("imagedata",social.getImagedata());
+                // 评论包含用户头像姓名的新的对象
+                if(social.getComments()==null){jsonObject.put("comments",null);}else{
+                    JSONArray cjsonArray =new JSONArray();
+                    for(int k=0;k<social.getComments().size();k++){
+                        List<Social.Comments> cnewlist =social.getComments();
+                        JSONObject cjsonObject=new JSONObject();
+                        User cuser =userRepository.findAllByUserId(cnewlist.get(k).getCuserid());
+                        cjsonObject.put("cuserid",cuser.getUserId());
+                        cjsonObject.put("cusername",cuser.getUsername());
+                        cjsonObject.put("cuserimg",cuser.getImageAddre());
+                        cjsonObject.put("commentData",cnewlist.get(k).getCommentData());
+                        cjsonObject.put("commenttime",cnewlist.get(k).getCommenttime());
+                        cjsonArray.add(cjsonObject);
+                    }
+                    jsonObject.put("comments",cjsonArray);}
+                jsonArray.add(jsonObject);
+            }
+            return new RespEntity(RespCode.SUCCESS,jsonArray);}
     }
 
     @RequestMapping("/CMHSP/socialFreshUp")//上拉刷新获取接下来五条动态
     public RespEntity shownextsociallist(@RequestBody Social social1) {
         List a = socialRepository.findBySocialidLessThan(social1.getSocialid());
         Collections.reverse(a); // 倒序排列
-        List<Social> newlist = a.subList(0, 5);
-        JSONArray jsonArray =new JSONArray();
-        for( int i=0;i<5;i++ ){
-            JSONObject jsonObject = new JSONObject();
-            User user1= userRepository.findAllByUserId(newlist.get(i).getUserid());
-            Social social = newlist.get(i);
-            jsonObject.put("userid",user1.getUserId());
-            jsonObject.put("username",user1.getUsername());
-            jsonObject.put("imageAddre",user1.getImageAddre());
-            jsonObject.put("socialid",social.getSocialid());
-            jsonObject.put("socialaddtime",social.getSocialaddtime());
-            jsonObject.put("textdata",social.getTextdata());
-            jsonObject.put("imagedata",social.getImagedata());
-            // 评论包含用户头像姓名的新的对象
-            JSONArray cjsonArray =new JSONArray();
-            for(int k=0;k<social.getComments().size();k++){
-                List<Social.Comments> cnewlist =social.getComments();
-                JSONObject cjsonObject=new JSONObject();
-                User cuser =userRepository.findAllByUserId(cnewlist.get(k).getCuserid());
-                cjsonObject.put("cuserid",cuser.getUserId());
-                cjsonObject.put("cusername",cuser.getUsername());
-                cjsonObject.put("cuserimg",cuser.getImageAddre());
-                cjsonObject.put("commentData",cnewlist.get(k).getCommentData());
-                cjsonObject.put("commenttime",cnewlist.get(k).getCommenttime());
-                cjsonArray.add(cjsonObject);
+        if(a.size()>4){
+            List<Social> newlist = a.subList(0, 5);
+            JSONArray jsonArray =new JSONArray();
+            for( int i=0;i<5;i++ ){
+                JSONObject jsonObject = new JSONObject();
+                User user1= userRepository.findAllByUserId(newlist.get(i).getUserid());
+                Social social = newlist.get(i);
+                jsonObject.put("userid",user1.getUserId());
+                jsonObject.put("username",user1.getUsername());
+                jsonObject.put("imageAddre",user1.getImageAddre());
+                jsonObject.put("socialid",social.getSocialid());
+                jsonObject.put("socialaddtime",social.getSocialaddtime());
+                jsonObject.put("textdata",social.getTextdata());
+                jsonObject.put("imagedata",social.getImagedata());
+                // 评论包含用户头像姓名的新的对象
+                if(social.getComments()==null){jsonObject.put("comments",null);}else{
+                    JSONArray cjsonArray =new JSONArray();
+                    for(int k=0;k<social.getComments().size();k++){
+                        List<Social.Comments> cnewlist =social.getComments();
+                        JSONObject cjsonObject=new JSONObject();
+                        User cuser =userRepository.findAllByUserId(cnewlist.get(k).getCuserid());
+                        cjsonObject.put("cuserid",cuser.getUserId());
+                        cjsonObject.put("cusername",cuser.getUsername());
+                        cjsonObject.put("cuserimg",cuser.getImageAddre());
+                        cjsonObject.put("commentData",cnewlist.get(k).getCommentData());
+                        cjsonObject.put("commenttime",cnewlist.get(k).getCommenttime());
+                        cjsonArray.add(cjsonObject);
+                    }
+                    jsonObject.put("comments",cjsonArray);}
+                jsonArray.add(jsonObject);
             }
-            jsonObject.put("comments",cjsonArray);
-            jsonArray.add(jsonObject);
-        }
-        return  new RespEntity(RespCode.SUCCESS,jsonArray);}
+            return  new RespEntity(RespCode.SUCCESS,jsonArray);}
+        else{ List<Social> newlist = a.subList(0, a.size());
+            JSONArray jsonArray =new JSONArray();
+            for( int i=0;i<a.size();i++ ){
+                JSONObject jsonObject = new JSONObject();
+                User user1= userRepository.findAllByUserId(newlist.get(i).getUserid());
+                Social social = newlist.get(i);
+                jsonObject.put("userid",user1.getUserId());
+                jsonObject.put("username",user1.getUsername());
+                jsonObject.put("imageAddre",user1.getImageAddre());
+                jsonObject.put("socialid",social.getSocialid());
+                jsonObject.put("socialaddtime",social.getSocialaddtime());
+                jsonObject.put("textdata",social.getTextdata());
+                jsonObject.put("imagedata",social.getImagedata());
+                // 评论包含用户头像姓名的新的对象
+                if(social.getComments()==null){jsonObject.put("comments",null);}else{
+                    JSONArray cjsonArray =new JSONArray();
+                    for(int k=0;k<social.getComments().size();k++){
+                        List<Social.Comments> cnewlist =social.getComments();
+                        JSONObject cjsonObject=new JSONObject();
+                        User cuser =userRepository.findAllByUserId(cnewlist.get(k).getCuserid());
+                        cjsonObject.put("cuserid",cuser.getUserId());
+                        cjsonObject.put("cusername",cuser.getUsername());
+                        cjsonObject.put("cuserimg",cuser.getImageAddre());
+                        cjsonObject.put("commentData",cnewlist.get(k).getCommentData());
+                        cjsonObject.put("commenttime",cnewlist.get(k).getCommenttime());
+                        cjsonArray.add(cjsonObject);
+                    }
+                    jsonObject.put("comments",cjsonArray);}
+                jsonArray.add(jsonObject);
+            }
+            return  new RespEntity(RespCode.SUCCESS,jsonArray);}}
 
 
     @Autowired
