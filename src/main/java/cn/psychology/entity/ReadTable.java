@@ -8,6 +8,9 @@ import javax.persistence.Id;
 @Document(collection = "readtable")
 public class ReadTable {
     @Id
+    // 主键
+    private String id;
+    @Field("readId")
     // 读物ID
     private Integer readId;
     @Field("readType")
