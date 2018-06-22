@@ -25,7 +25,7 @@ public class SocailController {
     SocialRepository socialRepository;
     @Autowired
     UserRepository userRepository;
-    @RequestMapping("/socialFreshDown")//下拉刷新获取最新五条动态
+    @RequestMapping("/CMHSP/socialFreshDown")//下拉刷新获取最新五条动态
     public RespEntity showsociallist() {
         List<Social> list1 = socialRepository.findAll();
         Collections.reverse(list1); // 倒序排列
@@ -63,7 +63,7 @@ public class SocailController {
         return new RespEntity(RespCode.SUCCESS,jsonArray);
     }
 
-    @RequestMapping("/socialFreshUp")//上拉刷新获取接下来五条动态
+    @RequestMapping("/CMHSP/socialFreshUp")//上拉刷新获取接下来五条动态
     public RespEntity shownextsociallist(@RequestBody Social social1) {
         List a = socialRepository.findBySocialidLessThan(social1.getSocialid());
         Collections.reverse(a); // 倒序排列
@@ -101,7 +101,7 @@ public class SocailController {
 
     @Autowired
     SocialService socialService;
-    @RequestMapping("/socialFavorite")//收藏动态
+    @RequestMapping("/CMHSP/socialFavorite")//收藏动态
     public RespEntity favoritesocial(@RequestBody com.alibaba.fastjson.JSONObject object1) {
         com.alibaba.fastjson.JSONObject ob1 =object1;
         Integer sid =ob1.getInteger("socialid");
@@ -110,7 +110,7 @@ public class SocailController {
         socialService.addsocialtofavorite(uid,uname,sid);
         return new RespEntity(RespCode.SUCCESS);
     }
-    @RequestMapping("/socialAdd")//发布动态
+    @RequestMapping("/CMHSP/socialAdd")//发布动态
     public RespEntity addsocial(@RequestBody com.alibaba.fastjson.JSONObject object2) {
         com.alibaba.fastjson.JSONObject ob2 =object2;
         String simg =ob2.get("imagedata").toString();
@@ -120,7 +120,7 @@ public class SocailController {
         socialService.addsocial(uid,simg,stext,atime);
         return new RespEntity(RespCode.SUCCESS);
     }
-    @RequestMapping("/socialCommentAdd")//发布评论
+    @RequestMapping("/CMHSP/socialCommentAdd")//发布评论
     public RespEntity addcomment(@RequestBody com.alibaba.fastjson.JSONObject object3) {
         com.alibaba.fastjson.JSONObject ob3 =object3;
         Integer cuid =ob3.getInteger("userid");

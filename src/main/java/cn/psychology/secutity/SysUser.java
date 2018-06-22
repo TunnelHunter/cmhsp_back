@@ -11,11 +11,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 @Entity
-//@Table(name="Secuser")
 @Document(collection = "Secuser")
 public class SysUser implements UserDetails {
     @Id
-    @GeneratedValue
     private String id;
     private String username;
     private String password;

@@ -23,33 +23,8 @@ public class ExamPaper implements Serializable {
 
     @Id
     private String id;
-    //    @Field("examination")
-//        private String examination;
-//    @Field("examinationName")
-//       private String examinationName;
-//    @Field("Question_List")
-//        private ArrayList<obj> Question_ListObj;
-//    @Field("Answer")
-//     private ArrayList<obja> Answer;
-//
-//
-//
-//     public class obj{
-//         String Questionid;
-//        String Question;
-//        String AnswerOne;
-//        String AnswerTwo;
-//        String AnswerThree;
-//        String AnswerFour;
-//
-//
-//    }
-//    public class obja{
-//
-//        String Optionid;
-//        String Optioncontent;
-//
-//    }
+
+
     @Field("examinationId")
     private String examinationId;
 

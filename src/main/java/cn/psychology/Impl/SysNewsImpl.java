@@ -7,6 +7,8 @@ import cn.psychology.service.SysNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class SysNewsImpl implements SysNewsService {
 
@@ -21,6 +23,7 @@ public class SysNewsImpl implements SysNewsService {
         SysNews sysNews = new SysNews();
         sysNews.setContext(str);
         sysNews.setId(sysId);
+        sysNews.setTime(new Date().toString() );
         combUserSys.insert(sysId);
         sysNewsRepository.save(sysNews);
         return "success";

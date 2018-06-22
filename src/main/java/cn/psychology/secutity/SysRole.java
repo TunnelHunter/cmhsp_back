@@ -1,24 +1,25 @@
 package cn.psychology.secutity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-//@Table(name="Roles")
+@Document(collection = "Secrole")
 public class SysRole {
     @Id
-    @GeneratedValue
-    private int id;
+    private String id;
     private String name;
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

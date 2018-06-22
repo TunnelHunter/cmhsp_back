@@ -91,7 +91,6 @@ public class AuthController {
                 user.setSex("");
                 user.setRegion("");
                 user.setUserRegTime("");
-                user.setRoles("");
                 userService.save(user);
                 return "用户"+addedUser.getUsername()+"注册成功";
             }else{

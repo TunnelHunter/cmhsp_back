@@ -68,8 +68,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(authenticationTokenFilterBean(),UsernamePasswordAuthenticationFilter.class);
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                //.antMatchers("/**").permitAll()
+                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 允许对于网站静态资源的无授权访问
 //                .antMatchers(
 //                        HttpMethod.GET,
@@ -82,6 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                ).permitAll()
                 // 对于获取token的rest api要允许匿名访问
                 .antMatchers("/user/**").permitAll()
+                .antMatchers("/CMHSP/**").access("hasAuthority('ROLE_USER')")
                 //.antMatchers("/admin/**").hasRole("ADMIN")
                 //.antMatchers("/admin/**").access("hasRole('ADMIN')")
                 //.antMatchers("/admin/**").access("hasAuthority('ROLE_ADMIN')")
