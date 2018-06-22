@@ -28,7 +28,7 @@ public class MusicController {
   //  @Autowired
   // private MusicImpl music;
 
-    @RequestMapping(value="/musicSceneList",produces="application/json;charset=UTF-8")//通过场景id获取所以音乐
+    @RequestMapping(value="/CMHSP/musicSceneList",produces="application/json;charset=UTF-8")//通过场景id获取所以音乐
     public RespEntity findmusiclist(@RequestBody Music music) {
         return new RespEntity(RespCode.SUCCESS,musicRepository.findAllByMusicsceneId(music.getMusicsceneId()));
     }
@@ -36,7 +36,7 @@ public class MusicController {
     
     @Autowired
     MusicService musicService;
-    @RequestMapping("/musicFavorite")//收藏音乐
+    @RequestMapping("/CMHSP/musicFavorite")//收藏音乐
     public RespEntity favoritemusic(@RequestBody com.alibaba.fastjson.JSONObject object) {
         com.alibaba.fastjson.JSONObject ob =object;
         String sid =ob.get("songid").toString();
