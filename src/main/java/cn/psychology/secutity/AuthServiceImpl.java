@@ -51,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
         userToAdd.setPassword(rawPassword);
         userToAdd.setLastPasswordResetDate(new Date());
         SysRole sysRole = new SysRole();
-        sysRole.setName("ROLE_ADMIN");
+        sysRole.setName("ROLE_USER");
         userToAdd.setRoles(asList(sysRole));
         return userRepository.insert(userToAdd);
     }

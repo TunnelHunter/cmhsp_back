@@ -32,8 +32,6 @@ public class User {
     //用户注册时间
     private String userRegTime;
 
-    //权限
-    private String roles;
 
 
 
@@ -111,15 +109,6 @@ public class User {
         this.userRegTime = userRegTime;
     }
 
-
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
-    }
 
 //    //此构造器用于回应前台字段据该情况。 当传入一个username，则给每一个属性都赋值："无修改"。
 //    public User(String username) {

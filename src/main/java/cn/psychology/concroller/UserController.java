@@ -65,7 +65,6 @@ public class UserController {
             user.setSex("");
             user.setRegion("");
             user.setUserRegTime("");
-            user.setRoles("");
             userService.save(user);
             return "用户"+name+"注册成功";
         }else{
@@ -121,7 +120,7 @@ public class UserController {
                  }
                 userService.save(userData);
                 System.out.println(Resjson);
-                return jsonUtil.JsonPackage(1,Resjson);
+                return jsonUtil.JsonPackage(0,Resjson);
 
             }else{
                  return jsonUtil.JsonPackage(1,"Check Failture");

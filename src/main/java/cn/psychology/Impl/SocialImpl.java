@@ -37,15 +37,24 @@ public class SocialImpl implements SocialService {
         favoriteRepository.save(favorite);
     }
     public void  addsocial(Integer uid,String img,String text,String addtime){
-        List<Social> list1 = socialRepository.findAll();
-        Social o1 =list1.get(list1.size()-1);
-        Social social =new Social();
-        social.setUserid(uid);
-        social.setImagedata(img);
-        social.setTextdata(text);
-        social.setSocialaddtime(addtime);
-        social.setSocialid(o1.getSocialid()+1);
-        socialRepository.save(social);
+        if(socialRepository.count()==0){
+            Social social =new Social();
+            social.setUserid(uid);
+            social.setImagedata(img);
+            social.setTextdata(text);
+            social.setSocialaddtime(addtime);
+            social.setSocialid(1);
+            socialRepository.save(social);}
+        else{
+            List<Social> list1 = socialRepository.findAll();
+            Social o1 =list1.get(list1.size()-1);
+            Social social =new Social();
+            social.setUserid(uid);
+            social.setImagedata(img);
+            social.setTextdata(text);
+            social.setSocialaddtime(addtime);
+            social.setSocialid(o1.getSocialid()+1);
+            socialRepository.save(social);}
     }
 
 
