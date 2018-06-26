@@ -1,12 +1,12 @@
 package cn.psychology.Util;
 
 public class RespEntity {
-    private int code;
+    private int error_code;
     private String msg;
     private Object data;
 
     public RespEntity(RespCode respCode) {
-        this.code = respCode.getCode();
+        this.error_code = respCode.getError_code();
         this.msg = respCode.getMsg();
     }
 
@@ -15,12 +15,12 @@ public class RespEntity {
         this.data = data;
     }
 
-    public int getCode() {
-        return code;
+    public int getError_code() {
+        return error_code;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setError_code(int error_code) {
+        this.error_code = error_code;
     }
 
     public String getMsg() {

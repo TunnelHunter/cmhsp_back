@@ -20,11 +20,11 @@ public class Social {
 
 
 
-    private Integer socialid;
-    private Integer userid;
-    private String socialaddtime;
-    private String imagedata;
-    private String textdata;
+    private Integer socialId;
+    private Integer userId;
+    private String socialAddTime;
+    private String imageData;
+    private String textData;
 
     private ArrayList<Comments> comments;
 
@@ -37,12 +37,12 @@ public class Social {
     }
 
     public class Comments{
-        public Integer getCuserid() {
-            return cuserid;
+        public Integer getCuserId() {
+            return cuserId;
         }
 
-        public void setCuserid(Integer cuserid) {
-            this.cuserid = cuserid;
+        public void setCuserId(Integer cuserId) {
+            this.cuserId = cuserId;
         }
 
         public String getCommentData() {
@@ -53,28 +53,28 @@ public class Social {
             this.commentData = commentData;
         }
 
-        public String getCommenttime() {
-            return commenttime;
+        public String getCommentTime() {
+            return commentTime;
         }
 
-        public void setCommenttime(String commenttime) {
-            this.commenttime = commenttime;
+        public void setCommentTime(String commentTime) {
+            this.commentTime = commentTime;
         }
-        @Field("cuserid")
-        Integer cuserid;
+        @Field("cuserId")
+        Integer cuserId;
         @Field("commentData")
         String commentData;
-        @Field("commenttime")
-        String commenttime;
-        @Field("commenttype")
-        Integer commenttype;
+        @Field("commentTime")
+        String commentTime;
+        @Field("commentType")
+        Integer commentType;
 
-        public Integer getCommenttype() {
-            return commenttype;
+        public Integer getCommentType() {
+            return commentType;
         }
 
-        public void setCommenttype(Integer commenttype) {
-            this.commenttype = commenttype;
+        public void setCommentType(Integer commentType) {
+            this.commentType = commentType;
         }
     }
 
@@ -89,44 +89,44 @@ public class Social {
 //    }
 
 
-    public Integer getSocialid() {
-        return socialid;
+    public Integer getsocialId() {
+        return socialId;
     }
 
-    public void setSocialid(Integer socialid) {
-        this.socialid = socialid;
+    public void setsocialId(Integer socialId) {
+        this.socialId = socialId;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public Integer getuserId() {
+        return userId;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setuserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getSocialaddtime() {
-        return socialaddtime;
+    public String getsocialAddTime() {
+        return socialAddTime;
     }
 
-    public void setSocialaddtime(String socialaddtime) {
-        this.socialaddtime = socialaddtime;
+    public void setsocialAddTime(String socialAddTime) {
+        this.socialAddTime = socialAddTime;
     }
 
-    public String getImagedata() {
-        return imagedata;
+    public String getimageData() {
+        return imageData;
     }
 
-    public void setImagedata(String imagedata) {
-        this.imagedata = imagedata;
+    public void setimageData(String imageData) {
+        this.imageData = imageData;
     }
 
-    public String getTextdata() {
-        return textdata;
+    public String gettextData() {
+        return textData;
     }
 
-    public void setTextdata(String textdata) {
-        this.textdata = textdata;
+    public void settextData(String textData) {
+        this.textData = textData;
     }
 
 

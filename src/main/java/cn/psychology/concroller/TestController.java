@@ -33,8 +33,7 @@ import java.util.List;
 @Component
 @RestController
 public class TestController {
-    @Autowired
-    private TestImpl tiimpl;
+    
     @Autowired
     private ScoreRepository scoreRepository;
     @Autowired
@@ -47,21 +46,21 @@ public class TestController {
 
     @RequestMapping(value="/ti/{id}", produces = "application/json; charset=UTF-8")
     public ExamPaper findone(@PathVariable String id) {
-        ExamPaper ti = tiimpl.findByExaminationId(id);
+        ExamPaper ti = testimpl.findByExaminationId(id);
         System.out.println(ti.getQuestionsMessage());
         return ti;
 
     }
-    @PreAuthorize("hasRole('USER')")
+
     @RequestMapping(value = "/CMHSP/examinationsList",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
 
     public  String findall() {
-        List<ExamPaper> list = tiimpl.findAll();
+        List<ExamPaper> list = testimpl.findAll();
         System.out.println(list);
-       // return "";
         return jsonUtil.JsonPackage(0,list);
 
     }
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/CMHSP/examinationsResults",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
 
     public  String setScore(@RequestBody Score score) {
@@ -73,13 +72,13 @@ public class TestController {
         //return jsonUtil.JsonPackage(0,list);
 
     }
-
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/CMHSP/userHisRecords",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
 
     public  String getHisRecords(@RequestBody User user) {
 
 
-        String userId = Integer.toString(user.getUserId());
+        String userId = Integer.toString(user.getuserId());
         List<Score> list =  scoreRepository.findAllByUserId(userId);
         JSONArray jsonArray = new JSONArray();
         for( int i=0;i<list.size();i++ ){
@@ -100,6 +99,7 @@ public class TestController {
         //return jsonUtil.JsonPackage(0,list);
 
     }
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/CMHSP/userAnalysis",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
 
     public  String getScoreAnalysis(@RequestBody LinkedHashMap<String,Object> ob ) {
@@ -158,14 +158,14 @@ public class TestController {
     @RequestMapping("ti/insert")
     public String insert(){
         String Str = "";
-        //tiimpl.insertTi(Str);
+        //testimpl.insertTi(Str);
         return "yes";
     }
     @RequestMapping(value = "/ti/count",produces = "application/json;charset=UTF-8")
     public int Count(){
         int Res = 0;
         try {
-             Res = tiimpl.count();
+             Res = testimpl.count();
         } catch (Exception e) {
             e.printStackTrace();
         }

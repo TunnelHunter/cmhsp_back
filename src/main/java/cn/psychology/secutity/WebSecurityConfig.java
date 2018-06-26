@@ -1,6 +1,7 @@
 package cn.psychology.secutity;
 
 
+import cn.psychology.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected UserDetailsService customUserService() {
@@ -34,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 使用BCrypt进行密码的hash
                 .passwordEncoder(passwordEncoder());
     }
+
     // 装载BCrypt密码编码器
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -65,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 基于token，所以不需要session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity
-                .addFilterBefore(authenticationTokenFilterBean(),UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
         httpSecurity
                 .authorizeRequests()
                 //.antMatchers("/**").permitAll()
@@ -81,8 +83,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                        "/**/*.js"
 //                ).permitAll()
                 // 对于获取token的rest api要允许匿名访问
+//                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/user/**").permitAll()
-                .antMatchers("/CMHSP/**").access("hasAuthority('ROLE_USER')")
+                .antMatchers("/CMHSP/**").permitAll()
+//                .antMatchers("/CMHSP/**").access("hasAuthority('ROLE_USER')")
                 //.antMatchers("/admin/**").hasRole("ADMIN")
                 //.antMatchers("/admin/**").access("hasRole('ADMIN')")
                 //.antMatchers("/admin/**").access("hasAuthority('ROLE_ADMIN')")

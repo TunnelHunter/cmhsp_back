@@ -4,6 +4,7 @@ package cn.psychology.concroller;
 import cn.psychology.entity.ReadTable;
 import cn.psychology.service.ReadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class ReadController {
     }
 
     //阅读收藏接口
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/CMHSP/readFavour",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
     public String readFavour() {
         return ("success");

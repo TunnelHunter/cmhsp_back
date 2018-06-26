@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : utf-8
 
- Date: 06/22/2018 13:01:56 PM
+ Date: 06/25/2018 16:03:16 PM
 */
 
 SET NAMES utf8;
@@ -127,13 +127,13 @@ CREATE TABLE `user` (
   `usernickname` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `userpwd` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 --  Records of `user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `user` VALUES ('1', '', '', '', '', '', 'liuchangwei', '', '123'), ('2', 'dd', 'sssqsss', '男', 'sas', '', 'haomiao', '大梦迷离藏小剑', '1234'), ('3', '', '', '', '', '', 'xuyechen', '', '123'), ('4', '', '', '', '', '', 'xueyangbo', '', '123');
+INSERT INTO `user` VALUES ('1', '', '', '', '', '', 'liuchangwei', '', '123'), ('2', 'dd', 'sssqsss', '男', 'sas', '', 'haomiao', '大梦迷离藏小剑', '1234'), ('3', '', '', '', '', '', 'xuyechen', '', '123'), ('4', '', '', '', '', '', 'xueyangbo', '', '123'), ('5', '', '', '', '', '', 'ceshi1', '', '123'), ('6', '', '', '', '', '', 'ceshi2', '', '123');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

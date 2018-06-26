@@ -28,10 +28,10 @@ public class SocialImpl implements SocialService {
 
     public void addsocialtofavorite(Integer uid, String uname, Integer sid) {
         Favorite favorite = new Favorite();
-        Social social =socialRepository.findAllBySocialid(sid);
+        Social social =socialRepository.findAllBySocialId(sid);
         favorite.setTitle(uname);
-        favorite.setContext(social.getTextdata());
-        favorite.setImage(social.getImagedata());
+        favorite.setContext(social.gettextData());
+        favorite.setImage(social.getimageData());
         favorite.setType(1);
         favorite.setUserid(uid);
         favoriteRepository.save(favorite);
@@ -39,35 +39,35 @@ public class SocialImpl implements SocialService {
     public void  addsocial(Integer uid,String img,String text,String addtime){
         if(socialRepository.count()==0){
             Social social =new Social();
-            social.setUserid(uid);
-            social.setImagedata(img);
-            social.setTextdata(text);
-            social.setSocialaddtime(addtime);
-            social.setSocialid(1);
+            social.setuserId(uid);
+            social.setimageData(img);
+            social.settextData(text);
+            social.setsocialAddTime(addtime);
+            social.setsocialId(1);
             socialRepository.save(social);}
         else{
             List<Social> list1 = socialRepository.findAll();
             Social o1 =list1.get(list1.size()-1);
             Social social =new Social();
-            social.setUserid(uid);
-            social.setImagedata(img);
-            social.setTextdata(text);
-            social.setSocialaddtime(addtime);
-            social.setSocialid(o1.getSocialid()+1);
+            social.setuserId(uid);
+            social.setimageData(img);
+            social.settextData(text);
+            social.setsocialAddTime(addtime);
+            social.setsocialId(o1.getsocialId()+1);
             socialRepository.save(social);}
     }
 
 
     public void addcomment(Integer cuid, Integer sid, String cd, String ct) {
 
-        Social social = socialRepository.findAllBySocialid(sid);
+        Social social = socialRepository.findAllBySocialId(sid);
         if (social.getComments()!=null) {
             ArrayList a = social.getComments();
             Social.Comments nc = social.new Comments();
-            nc.setCommenttype(1);
-            nc.setCuserid(cuid);
+            nc.setCommentType(1);
+            nc.setCuserId(cuid);
             nc.setCommentData(cd);
-            nc.setCommenttime(ct);
+            nc.setCommentTime(ct);
             a.add(nc);
             social.setComments(a);
             socialRepository.save(social);
@@ -75,9 +75,9 @@ public class SocialImpl implements SocialService {
         else{
             ArrayList a1 =new ArrayList();
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("cuserid",cuid);
+            jsonObject.put("cuserId",cuid);
             jsonObject.put("commentData",cd);
-            jsonObject.put("commenttime",ct);
+            jsonObject.put("commentTime",ct);
             a1.add(0,jsonObject);
             social.setComments(a1);
             socialRepository.save(social);

@@ -25,7 +25,7 @@ public class CombUserSysImpl implements CombUserSysService {
         for(int i = 1;i<=Count;i++){
             User user = userRepository.findOne(i);
             CombUserSysNews combUserSysNews = new CombUserSysNews();
-            combUserSysNews.setUserId(user.getUserId());
+            combUserSysNews.setUserId(user.getuserId());
             combUserSysNews.setSysId(sysnewsid);
             combUserSysNews.setStatus(SysnewsStatus.hasnotRead.getIndex());//weidu
             combineSysRepository.save(combUserSysNews);
@@ -34,7 +34,7 @@ public class CombUserSysImpl implements CombUserSysService {
     }
 
     //获取我的未读系统消息
-    public List<CombUserSysNews> findHasNotReadByUserid(int id){
+    public List<CombUserSysNews> findHasNotReadByUserId(int id){
         int status = SysnewsStatus.hasnotRead.getIndex();
         List<CombUserSysNews>  list = combineSysRepository.findAllByUserIdAndStatusOrderById(id,status);
 

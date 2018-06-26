@@ -37,27 +37,27 @@ public class User {
 
 
 
-    public String getUserpwd() {
+    public String getuserpwd() {
         return userpwd;
     }
 
-    public void setUserpwd(String userpwd) {
+    public void setuserpwd(String userpwd) {
         this.userpwd = userpwd;
     }
 
-    public int getUserId() {
+    public int getuserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setuserId(int userId) {
         this.userId = userId;
     }
 
-    public String getUsername() {
+    public String getusername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setusername(String username) {
         this.username = username;
     }
 
