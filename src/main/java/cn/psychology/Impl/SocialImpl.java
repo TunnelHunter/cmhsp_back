@@ -26,15 +26,27 @@ public class SocialImpl implements SocialService {
     @Autowired
     UserRepository userRepository;
 
-    public void addsocialtofavorite(Integer uid, String uname, Integer sid) {
+    public int addsocialtofavorite(Integer uid, String uname, Integer sid) {
         Favorite favorite = new Favorite();
         Social social =socialRepository.findAllBySocialId(sid);
-        favorite.setTitle(uname);
-        favorite.setContext(social.gettextData());
-        favorite.setImage(social.getimageData());
-        favorite.setType(1);
-        favorite.setUserid(uid);
-        favoriteRepository.save(favorite);
+
+        //判断是否已有该条收藏
+        Favorite favoriteCharge = new Favorite();
+        favoriteCharge = favoriteRepository.findBySourceidAndAndType(social.getsocialId(),1);
+        if( favoriteCharge != null ){
+            // 已有该条内容
+            return 1;
+        }else {
+            favorite.setTitle(uname);
+            favorite.setContext(social.gettextData());
+            favorite.setImage(social.getimageData());
+            favorite.setType(1);
+            favorite.setUserid(uid);
+            favorite.setSourceid(social.getsocialId());
+            favoriteRepository.save(favorite);
+            return 0;
+        }
+
     }
     public void  addsocial(Integer uid,String img,String text,String addtime){
         if(socialRepository.count()==0){

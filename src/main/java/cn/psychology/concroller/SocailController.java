@@ -177,8 +177,12 @@ public class SocailController {
         Integer sid =ob1.getInteger("socialId");
         Integer uid =ob1.getInteger("userId");
         String  uname =ob1.get("userName").toString();
-        socialService.addsocialtofavorite(uid,uname,sid);
-        return new RespEntity(RespCode.SUCCESS);
+        int Result = socialService.addsocialtofavorite(uid,uname,sid);
+        if(Result == 0){
+            return new RespEntity(RespCode.SUCCESS);
+        }else{
+            return new RespEntity(RespCode.ERROR);
+        }
     }
     @PreAuthorize("hasRole('USER')")
     @RequestMapping("/CMHSP/socialAdd")//发布动态
