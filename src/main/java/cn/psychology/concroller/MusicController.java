@@ -15,6 +15,7 @@ import cn.psychology.service.MusicService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -36,11 +37,12 @@ public class MusicController {
     
     @Autowired
     MusicService musicService;
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping("/CMHSP/musicFavorite")//收藏音乐
     public RespEntity favoritemusic(@RequestBody com.alibaba.fastjson.JSONObject object) {
         com.alibaba.fastjson.JSONObject ob =object;
-        String sid =ob.get("songid").toString();
-        Integer uid =ob.getInteger("userid");
+        String sid =ob.get("songId").toString();
+        Integer uid =ob.getInteger("userId");
         musicService.addmusictofavorite(sid,uid);
         return new RespEntity(RespCode.SUCCESS);
     }

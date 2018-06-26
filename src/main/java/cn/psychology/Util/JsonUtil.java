@@ -7,13 +7,13 @@ public  class JsonUtil {
     public  String JsonPackage(int errorCode,Object object){
         JSONObject jsonObject = new JSONObject();
         if( errorCode == 0 ){
-            jsonObject.append("error_code",0);
-            jsonObject.append("message","successful");
-            jsonObject.append("data",object);
+            jsonObject.put("error_code",0);
+            jsonObject.put("message","successful");
+            jsonObject.put("data",object);
         }else{
-            jsonObject.append("error_code",1);
-            jsonObject.append("message","error");
-            jsonObject.append("data","something error" );
+            jsonObject.put("error_code",1);
+            jsonObject.put("message","error");
+            jsonObject.put("data","something error" );
         }
         return jsonObject.toString();
     }

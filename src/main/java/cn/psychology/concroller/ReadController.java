@@ -4,6 +4,7 @@ package cn.psychology.concroller;
 import cn.psychology.entity.ReadTable;
 import cn.psychology.service.ReadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,25 +23,26 @@ public class ReadController {
     }
 
     //阅读搜索接口
-    @RequestMapping(value = "/CMHSP/readSearch",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/CMHSP/readSearch",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
     public List<ReadTable> readSearch(@RequestParam String keyWord, @RequestParam Boolean readType) {
         return readService.readSearch(keyWord,readType);
     }
 
     //获取详细信息接口（书/文章）
-    @RequestMapping(value = "/CMHSP/readDetil",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/CMHSP/readDetil",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
     public List<ReadTable> readDetil(@RequestParam Integer readId) {
         return readService.readDetil(readId);
     }
 
     //获取列表接口（书/文章）
-    @RequestMapping(value = "/CMHSP/readList",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
+    @RequestMapping(value = "/CMHSP/readList",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
     public List<ReadTable> readList(@RequestParam Boolean readType) {
         return readService.readList(readType);
     }
 
     //阅读收藏接口
-    @RequestMapping(value = "/CMHSP/readFavour",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "/CMHSP/readFavour",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
     public String readFavour() {
         return ("success");
     }
