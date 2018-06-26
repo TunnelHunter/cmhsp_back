@@ -5,6 +5,6 @@ import cn.psychology.entity.Music;
 import cn.psychology.entity.User;
 
 public interface MusicService {
-    public void addmusictofavorite(String songid,Integer userid);
+    public int addmusictofavorite(String songid,Integer userid);
 
 }

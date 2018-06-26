@@ -35,43 +35,43 @@ public class Music {
         this.musicsceneName = musicsceneName;
     }
 
-    public String getSongid() {
-        return songid;
+    public String getSongId() {
+        return songId;
     }
 
-    public void setSongid(String songid) {
-        this.songid = songid;
+    public void setSongId(String songId) {
+        this.songId = songId;
     }
 
-    public String getSongname() {
-        return songname;
+    public String getSongName() {
+        return songName;
     }
 
-    public void setSongname(String songname) {
-        this.songname = songname;
+    public void setSongName(String songName) {
+        this.songName = songName;
     }
 
-    public String getSongauthor() {
-        return songauthor;
+    public String getSongAuthor() {
+        return songAuthor;
     }
 
-    public void setSongauthor(String songauthor) {
-        this.songauthor = songauthor;
+    public void setSongAuthor(String songAuthor) {
+        this.songAuthor = songAuthor;
     }
 
-    public String getSongcontext() {
-        return songcontext;
+    public String getSongContext() {
+        return songContext;
     }
 
-    public void setSongcontext(String songcontext) {
-        this.songcontext = songcontext;
+    public void setSongContext(String songContext) {
+        this.songContext = songContext;
     }
 
     private String musicsceneId;
     private String musicsceneName;
-    private String songid;
-    private String songname;
-    private String songauthor;
-    private String songcontext;
+    private String songId;
+    private String songName;
+    private String songAuthor;
+    private String songContext;
 
 }

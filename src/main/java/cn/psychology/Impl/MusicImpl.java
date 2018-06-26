@@ -43,15 +43,24 @@ public class MusicImpl implements MusicService {
 MusicRepository musicRepository;
 @Autowired
     FavoriteRepository favoriteRepository;
-    public void addmusictofavorite(String songid,Integer userid) {
+    public int addmusictofavorite(String songid,Integer userid) {
             Favorite favorite = new Favorite();
-            Music music1 = musicRepository.findAllBySongid(songid);
-            favorite.setTitle(music1.getSongname());
-            favorite.setContext(music1.getSongcontext());
-            favorite.setImage(music1.getSongauthor());
-            favorite.setType(2);
-            favorite.setUserid(userid);
-            favoriteRepository.save(favorite);
-        return ;
+            Music music1 = musicRepository.findAllBySongId(songid);
+            //防止重复收藏
+        Favorite favoriteCharge = new Favorite();
+        favoriteCharge =  favoriteRepository.findBySourceidAndAndType(Integer.parseInt(music1.getSongId()),2);
+            if(favoriteCharge !=null){
+                //已有该条收藏
+                return 1;
+            }else {
+                favorite.setTitle(music1.getSongName());
+                favorite.setContext(music1.getSongContext());
+                favorite.setImage(music1.getSongAuthor());
+                favorite.setType(2);
+                favorite.setUserid(userid);
+                favorite.setSourceid(Integer.parseInt(music1.getSongId()));
+                favoriteRepository.save(favorite);
+                return 0;
+            }
     }
 }

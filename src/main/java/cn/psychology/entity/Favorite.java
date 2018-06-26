@@ -13,6 +13,7 @@ public class Favorite {
 
     private Integer type;
     private Integer userid;
+    private Integer sourceid;
     private String image;
     private String title;
     private String context;
@@ -38,6 +39,13 @@ public class Favorite {
     }
 
 
+    public Integer getSourceid() {
+        return sourceid;
+    }
+
+    public void setSourceid(Integer sourceid) {
+        this.sourceid = sourceid;
+    }
 
     public void setUserid(Integer userid) {
         this.userid = userid;

@@ -43,7 +43,14 @@ public class MusicController {
         com.alibaba.fastjson.JSONObject ob =object;
         String sid =ob.get("songId").toString();
         Integer uid =ob.getInteger("userId");
-        musicService.addmusictofavorite(sid,uid);
-        return new RespEntity(RespCode.SUCCESS);
+
+//        musicService.addmusictofavorite(sid,uid);
+//        return new RespEntity(RespCode.SUCCESS);
+        int Result = musicService.addmusictofavorite(sid,uid);
+        if(Result == 0){
+            return new RespEntity(RespCode.SUCCESS);
+        }else{
+            return new RespEntity(RespCode.ERROR);
+        }
     }
 }
