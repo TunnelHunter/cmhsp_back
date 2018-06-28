@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -166,6 +167,34 @@ public class SocailController {
                 jsonArray.add(jsonObject);
             }
             return  new RespEntity(RespCode.SUCCESS,jsonArray);}}
+
+
+
+
+    //根据socialId返回该动态的所有评论
+    @RequestMapping(value = "/CMHSP/showComments", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    public RespEntity showcomments(@RequestBody Social social) {
+        int[] zero = new int[0];
+        Social a = socialRepository.findAllBySocialId(social.getsocialId());
+        if (a.getComments() == null) {
+            return new RespEntity(RespCode.SUCCESS, zero);
+        } else {
+            JSONArray cjsonArray = new JSONArray();
+            for (int k = 0; k < a.getComments().size(); k++) {
+                List<Social.Comments> cnewlist = a.getComments();
+                JSONObject cjsonObject = new JSONObject();
+                User cuser = userRepository.findAllByUserId(cnewlist.get(k).getCuserId());
+                cjsonObject.put("cuserId", cuser.getuserId());
+                cjsonObject.put("cuserName", cuser.getusername());
+                cjsonObject.put("cuserImg", cuser.getImageAddre());
+                cjsonObject.put("commentData", cnewlist.get(k).getCommentData());
+                cjsonObject.put("commentTime", cnewlist.get(k).getCommentTime());
+                cjsonObject.put("commentType", cnewlist.get(k).getCommentType());
+                cjsonArray.add(cjsonObject);
+            }
+            return new RespEntity(RespCode.SUCCESS, cjsonArray);
+        }
+    }
 
 
     @Autowired
