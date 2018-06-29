@@ -12,10 +12,10 @@ public class ReadTable {
     private String id;
     @Field("readId")
     // 读物ID
-    private Integer readId;
+    private String readId;
     @Field("readType")
     // 读物类型
-    private Boolean readType;
+    private int readType;
     @Field("readTitle")
     // 读物题目
     private String readTitle;
@@ -29,11 +29,11 @@ public class ReadTable {
     // 读物内容
     private String readContext;
 
-    public Integer getReadId() {
+    public String getReadId() {
         return readId;
     }
 
-    public void setReadId(Integer readId) {
+    public void setReadId(String readId) {
         this.readId = readId;
     }
 
@@ -69,7 +69,11 @@ public class ReadTable {
         this.readContext = readContext;
     }
 
-    public Boolean getReadType() { return readType; }
+    public int getReadType() {
+        return readType;
+    }
 
-    public void setReadType(Boolean readType) { this.readType = readType; }
+    public void setReadType(int readType) {
+        this.readType = readType;
+    }
 }

@@ -32,7 +32,7 @@ public class SocialImpl implements SocialService {
 
         //判断是否已有该条收藏
         Favorite favoriteCharge = new Favorite();
-        favoriteCharge = favoriteRepository.findBySourceidAndAndType(social.getsocialId(),1);
+        favoriteCharge = favoriteRepository.findBySourceidAndAndTypeAndAndUserid(social.getsocialId().toString(),1,uid);
         if( favoriteCharge != null ){
             // 已有该条内容
             return 1;
@@ -42,7 +42,7 @@ public class SocialImpl implements SocialService {
             favorite.setImage(social.getimageData());
             favorite.setType(1);
             favorite.setUserid(uid);
-            favorite.setSourceid(social.getsocialId());
+            favorite.setSourceid(social.getsocialId().toString());
             favoriteRepository.save(favorite);
             return 0;
         }

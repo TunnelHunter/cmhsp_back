@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 public interface ReadRepository extends MongoRepository<ReadTable,Integer> {
 
     //获取详细信息接口（书/文章）
-    ReadTable findByReadId(Integer readId);
+    ReadTable findByReadId(String readId);
 
     //获取列表接口（书/文章）
-    List<ReadTable> findByReadType(Boolean readType);
+    List<ReadTable> findByReadType(int readType);
 
 }

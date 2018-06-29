@@ -1,11 +1,13 @@
 package cn.psychology.concroller;
 
 
+import cn.psychology.Util.JsonUtil;
 import cn.psychology.Util.RespCode;
 import cn.psychology.Util.RespEntity;
 import cn.psychology.entity.ReadTable;
 import cn.psychology.service.ReadService;
 import com.alibaba.fastjson.JSON;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +21,14 @@ public class ReadController {
 
     @Autowired
     private ReadService readService;
+    private JsonUtil jsonUtil = new JsonUtil();
 
     //阅读首屏加载接口
     @RequestMapping(value = "/CMHSP/readFirstPage",method = RequestMethod.GET,produces = "application/json; charset=UTF-8")
-    public List<ReadTable> readFirstPage() {
-        return readService.readFirstPage();
+    public String readFirstPage() {
+
+        JSONObject result =  readService.readFirstPage();
+        return jsonUtil.JsonPackage(0,result);
     }
 
     //阅读搜索接口
@@ -33,13 +38,8 @@ public class ReadController {
         com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
         String readType = json.get("readType").toString();
         String searchKeyword = json.get("searchKeyword").toString() ;
-        boolean readTypeboolean = false;
-        if(readType.equals("0")){
-            readTypeboolean = false;
-        }else{
-            readTypeboolean = true;
-        }
-        List<ReadTable> result = readService.readSearch(searchKeyword,readTypeboolean);
+
+        List<ReadTable> result = readService.readSearch(searchKeyword,Integer.parseInt(readType));
         return new RespEntity(RespCode.SUCCESS, result);
     }
 
@@ -51,7 +51,7 @@ public class ReadController {
         com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
         String readId = json.get("readId").toString() ;
         //return readService.readDetil(Integer.parseInt(readId));
-        ReadTable result = readService.readDetil(Integer.parseInt(readId));
+        ReadTable result = readService.readDetil(readId);
         return new RespEntity(RespCode.SUCCESS, result);
     }
 
@@ -61,14 +61,9 @@ public class ReadController {
         String str = JSON.toJSONString(ob);
         com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
         String readType = json.get("readType").toString() ;
-        boolean readTypeboolean = false;
-        if(readType.equals("0")){
-            readTypeboolean = false;
-        }else{
-            readTypeboolean = true;
-        }
+
         //return readService.readList(readTypeboolean);
-        List<ReadTable> result = readService.readList(readTypeboolean);
+        List<ReadTable> result = readService.readList(Integer.parseInt(readType));
         return new RespEntity(RespCode.SUCCESS, result);
     }
 
