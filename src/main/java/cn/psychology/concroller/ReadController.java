@@ -28,7 +28,7 @@ public class ReadController {
 
     //阅读搜索接口
     @RequestMapping(value = "/CMHSP/readSearch",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
-    public List<ReadTable> readSearch(@RequestBody LinkedHashMap<String,Object> ob ) {
+    public RespEntity readSearch(@RequestBody LinkedHashMap<String,Object> ob ) {
         String str = JSON.toJSONString(ob);
         com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
         String readType = json.get("readType").toString();
@@ -39,22 +39,25 @@ public class ReadController {
         }else{
             readTypeboolean = true;
         }
-        return readService.readSearch(searchKeyword,readTypeboolean);
+        List<ReadTable> result = readService.readSearch(searchKeyword,readTypeboolean);
+        return new RespEntity(RespCode.SUCCESS, result);
     }
 
     //获取详细信息接口（书/文章）
     @RequestMapping(value = "/CMHSP/readDetil",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
-    public ReadTable readDetil(@RequestBody LinkedHashMap<String,Object> ob ) {
+    public RespEntity readDetil(@RequestBody LinkedHashMap<String,Object> ob ) {
 
         String str = JSON.toJSONString(ob);
         com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
         String readId = json.get("readId").toString() ;
-        return readService.readDetil(Integer.parseInt(readId));
+        //return readService.readDetil(Integer.parseInt(readId));
+        ReadTable result = readService.readDetil(Integer.parseInt(readId));
+        return new RespEntity(RespCode.SUCCESS, result);
     }
 
     //获取列表接口（书/文章）
     @RequestMapping(value = "/CMHSP/readList",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
-    public List<ReadTable> readList(@RequestBody LinkedHashMap<String,Object> ob ) {
+    public RespEntity readList(@RequestBody LinkedHashMap<String,Object> ob ) {
         String str = JSON.toJSONString(ob);
         com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
         String readType = json.get("readType").toString() ;
@@ -64,7 +67,9 @@ public class ReadController {
         }else{
             readTypeboolean = true;
         }
-        return readService.readList(readTypeboolean);
+        //return readService.readList(readTypeboolean);
+        List<ReadTable> result = readService.readList(readTypeboolean);
+        return new RespEntity(RespCode.SUCCESS, result);
     }
 
     //阅读收藏接口
