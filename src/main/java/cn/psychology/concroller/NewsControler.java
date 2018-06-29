@@ -29,12 +29,10 @@ public class NewsControler {
     @RequestMapping(value = "/read/insert",method = RequestMethod.POST,produces = "application/json; charset=UTF-8")
     public String insertRead(@RequestBody JSONObject json){
         ReadTable readTable = new ReadTable();
-        int readId =  Integer.parseInt( json.get("readId").toString());
-        String readTypeStr = json.get("readType").toString();
-        Boolean readType = false;
-        if(readTypeStr.equals("1")){
-            readType = true;
-        }
+        String readId = json.get("readId").toString();
+        int readTypeInt = Integer.parseInt(json.get("readType").toString()) ;
+
+
 
         String readTitle = json.get("readTitle").toString();
         String readAuthor = json.get("readAuthor").toString();
@@ -45,7 +43,7 @@ public class NewsControler {
         readTable.setReadContext(readContext);
         readTable.setReadImage(readImage);
         readTable.setReadTitle(readTitle);
-        readTable.setReadType(readType);
+        readTable.setReadType(readTypeInt);
         ReadTable  Result =  readRepository.insert(readTable);
         return  jsonUtil.JsonPackage(0,Result.getClass().toString());
     }

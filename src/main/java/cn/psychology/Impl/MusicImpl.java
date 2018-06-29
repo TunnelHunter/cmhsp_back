@@ -48,7 +48,7 @@ MusicRepository musicRepository;
             Music music1 = musicRepository.findAllBySongId(songid);
             //防止重复收藏
         Favorite favoriteCharge = new Favorite();
-        favoriteCharge =  favoriteRepository.findBySourceidAndAndType(Integer.parseInt(music1.getSongId()),2);
+        favoriteCharge =  favoriteRepository.findBySourceidAndAndTypeAndAndUserid(music1.getSongId(),2,userid);
             if(favoriteCharge !=null){
                 //已有该条收藏
                 return 1;
@@ -58,7 +58,7 @@ MusicRepository musicRepository;
                 favorite.setImage(music1.getSongAuthor());
                 favorite.setType(2);
                 favorite.setUserid(userid);
-                favorite.setSourceid(Integer.parseInt(music1.getSongId()));
+                favorite.setSourceid(music1.getSongId());
                 favoriteRepository.save(favorite);
                 return 0;
             }
