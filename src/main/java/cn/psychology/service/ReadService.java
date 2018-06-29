@@ -39,7 +39,7 @@ public class ReadService {
          readTable = mongoTemplate.find(query, ReadTable.class); //给哥地址
         readTable.clear();
         for(ReadTable entity:resLists){
-            if( readTable.size()<=5 ){
+            if( readTable.size()<5 ){
                 readTable.add(entity);
             }
         }
@@ -51,7 +51,7 @@ public class ReadService {
         List<ReadTable> resList= mongoTemplate.find(query2, ReadTable.class);
         readTable.clear();
         for(ReadTable entity:resList){
-            if( readTable.size()<=6 ){
+            if( readTable.size()<6 ){
                 readTable.add(entity);
             }
         }
@@ -61,10 +61,10 @@ public class ReadService {
         Query query3 = new Query(Criteria.where("readType").is(ReadType.ESSAY.getIndex())
                 //,Criteria.where("readId").is(8)
         );
-        List<ReadTable> resList2= mongoTemplate.find(query3, ReadTable.class);
+        List<ReadTable> resListEssay= mongoTemplate.find(query3, ReadTable.class);
         readTable.clear();
-        for(ReadTable entity:resList){
-            if( readTable.size()<=6 ){
+        for(ReadTable entity:resListEssay){
+            if( readTable.size()<6 ){
                 readTable.add(entity);
             }
         }
