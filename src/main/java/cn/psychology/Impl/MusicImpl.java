@@ -54,7 +54,7 @@ MusicRepository musicRepository;
                 return 1;
             }else {
                 favorite.setTitle(music1.getSongName());
-                favorite.setContext(music1.getSongContext());
+                favorite.setContext(music1.getSongAuthor());
                 favorite.setImage(music1.getSongAuthor());
                 favorite.setType(2);
                 favorite.setUserid(userid);

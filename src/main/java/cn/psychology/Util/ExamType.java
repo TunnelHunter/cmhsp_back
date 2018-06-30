@@ -2,8 +2,8 @@ package cn.psychology.Util;
 
 public enum ExamType {
 
-    Depression("抑郁症",1),
-    anxious("焦虑症",2);
+    Depression("抑郁症类型试题",1),
+    anxious("焦虑症类型试题",2);
     private String name;
     private int index;
 
