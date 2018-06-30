@@ -242,8 +242,8 @@ public class UserController {
             int socialListSize = socialsList.size();
             for (int i = 0; i < socialListSize; i++) {
                 Integer dd = socialsList.get(i).getsocialId();
-                //Social social =  socialRepository.findAllBySocialid(socialsList.get(i).getSocialid());
-                Social social = socialRepository.findAllBySocialId(1);
+                Social social =  socialRepository.findAllBySocialId(socialsList.get(i).getsocialId());
+                //Social social = socialRepository.findAllBySocialId(1);
                 List<Social.Comments> commentsList = socialsList.get(i).getComments();
                 int commentsListSize = commentsList.size();
                 for (int j = 0; j < commentsListSize; j++) {
