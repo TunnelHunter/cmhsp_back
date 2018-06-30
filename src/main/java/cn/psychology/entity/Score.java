@@ -23,7 +23,7 @@ public class Score {
     // 此次得分
     private String examinationScore;
     //时间戳
-    private long testTime;
+    private String testTime;
     //总结
     private String  summary;
 
@@ -63,11 +63,11 @@ public class Score {
         this.examinationScore = examinationScore;
     }
 
-    public long getTestTime() {
+    public String getTestTime() {
         return testTime;
     }
 
-    public void setTestTime(long testTime) {
+    public void setTestTime(String testTime) {
         this.testTime = testTime;
     }
 

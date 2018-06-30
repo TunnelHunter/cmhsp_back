@@ -92,6 +92,7 @@ public class TestController {
             jsonObject.put("summary",examPaper.getQuestionsConclusion().get( index-1 ).getSummary());  //  -1: conclusionId -1 = 数组下标
             jsonObject.put("time",score.getTestTime());
             jsonObject.put("conclusion",examPaper.getQuestionsConclusion().get( index-1 ).getQueConclusion());
+            jsonObject.put("testName",examPaper.getExaminationName());
             jsonArray.put(jsonObject);
         }
 
@@ -113,9 +114,8 @@ public class TestController {
         // testTime 封装
         ArrayList<String> testTime = new ArrayList<>();
          for(Score example : list){
-                   int time = (int)example.getTestTime();
-                   String timeStr = Integer.toString(time);
-                   testTime.add(timeStr);
+                   String time = example.getTestTime();
+                   testTime.add(time);
                 }
 
          //testScore 封装

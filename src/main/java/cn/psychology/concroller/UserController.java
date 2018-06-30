@@ -288,11 +288,14 @@ public class UserController {
             int commentsListSize = commentsList.size();
             for (int j = 0; j < commentsListSize; j++) {
                 //if (commentsList.get(j).getCommentType().equals(0)) {
+                int cuserId = commentsList.get(j).getCuserId();
+                User user = userRepository.findAllByUserId(cuserId);
                     JSONObject jsonObject = new JSONObject();
-                    hasNotReadCommentss.add(commentsList.get(j));
-                    //jsonObject.put("commentsContext",commentsList.get(j));
-                    //hasNotReadComments.put(jsonObject);
-
+                jsonObject.put("userId",commentsList.get(j).getCuserId());
+                jsonObject.put("userName",user.getusername());
+                jsonObject.put("comData",commentsList.get(j).getCommentData());
+                jsonObject.put("comTime",commentsList.get(j).getCommentTime());
+                    hasNotReadCommentss.add(jsonObject);
                // }
             }
 
