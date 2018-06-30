@@ -112,9 +112,11 @@ public class AuthController {
             user.setRegion("");
             user.setUserRegTime("");
             userService.save(user);
-            return "用户" + addedUser.getUsername() + "注册成功";
+            String aubRes =  "用户" + addedUser.getUsername() + "注册成功";
+            return jsonUtil.JsonPackage(0, aubRes);
         } else {
-            return "用户：" + addedUser.getUsername() + "已被注册";
+            String aubRes =  "用户：" + addedUser.getUsername() + "已被注册";
+            return jsonUtil.JsonPackage(1, aubRes);
         }
 
 
