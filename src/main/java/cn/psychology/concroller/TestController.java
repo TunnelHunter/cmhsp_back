@@ -92,6 +92,7 @@ public class TestController {
             jsonObject.put("summary",examPaper.getQuestionsConclusion().get( index-1 ).getSummary());  //  -1: conclusionId -1 = 数组下标
             jsonObject.put("time",score.getTestTime());
             jsonObject.put("conclusion",examPaper.getQuestionsConclusion().get( index-1 ).getQueConclusion());
+            jsonObject.put("testName",examPaper.getExaminationName());
             jsonArray.put(jsonObject);
         }
 
