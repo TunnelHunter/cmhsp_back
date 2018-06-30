@@ -78,7 +78,7 @@ public class UserController {
     }
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/CMHSP/userUpdate", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public String Update(@RequestBody User user) {
+        public String Update(@RequestBody User user) {
         if (user != null) {
             //检查是否登录
             boolean bool = userService.CheckLogin(user.getusername(), user.getuserpwd());
@@ -292,6 +292,7 @@ public class UserController {
                 jsonObject.put("userName",user.getusername());
                 jsonObject.put("comData",commentsList.get(j).getCommentData());
                 jsonObject.put("comTime",commentsList.get(j).getCommentTime());
+                jsonObject.put("comImage",user.getImageAddre());
                     hasNotReadCommentss.add(jsonObject);
                // }
             }

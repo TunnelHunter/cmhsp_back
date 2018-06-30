@@ -16,6 +16,7 @@ public interface ScoreRepository extends JpaRepository<Score,Integer> {
     public List<Score> findAllByUserIdAndAndTestType(String userId,String testType);
     public List<Score> findAllByUserIdOrderByTestType(String userId);
     public List<Score> findDistinctByUserId(String userId);
+    public List<Score> findAllByUserIdAndExaminationId(String userId,String examId);
 
 
 

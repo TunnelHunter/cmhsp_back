@@ -3,8 +3,10 @@ package cn.psychology.concroller;
 
 
 import cn.psychology.Impl.TestImpl;
+import cn.psychology.Util.ExamType;
 import cn.psychology.Util.JsonUtil;
 import cn.psychology.dao.ScoreRepository;
+import cn.psychology.dao.TestRepository;
 import cn.psychology.entity.ExamPaper;
 import cn.psychology.entity.Score;
 import cn.psychology.entity.User;
@@ -38,6 +40,8 @@ public class TestController {
     private ScoreRepository scoreRepository;
     @Autowired
     private TestImpl testimpl;
+    @Autowired
+    private TestRepository testRepository;
 
     @PersistenceContext
     private EntityManager entitymanager;
@@ -107,7 +111,7 @@ public class TestController {
 
         String str = JSON.toJSONString(ob);
         com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
-        String userId = json.get("userId").toString() ;
+        String userId = json.get("userId").toString();
 
         List<Score> list =  scoreRepository.findAllByUserId(userId);
         JSONObject jsonObject = new JSONObject();
@@ -118,38 +122,94 @@ public class TestController {
                    testTime.add(time);
                 }
 
-         //testScore 封装
-        JSONArray jsonArrayScore = new JSONArray();
-        for( int i=0;i<list.size();i++ ){
-            JSONObject jsonObjectScore = new JSONObject();
-            jsonObjectScore.put("examName",testimpl.findByExaminationId(list.get(i).getExaminationId()).getExaminationName());
-            jsonObjectScore.put("score",list.get(i).getExaminationScore());
-            jsonArrayScore.put(jsonObjectScore);
+//         //testScore 封装
+//        JSONArray jsonArrayScore = new JSONArray();
+//        for( int i=0;i<list.size();i++ ){
+//            JSONObject jsonObjectScore = new JSONObject();
+//            jsonObjectScore.put("examName",testimpl.findByExaminationId(list.get(i).getExaminationId()).getExaminationName());
+//            jsonObjectScore.put("score",list.get(i).getExaminationScore());
+//            jsonArrayScore.put(jsonObjectScore);
+//        }
+//        //typeAnaly 封装
+//        ArrayList<String > TypeCount= new ArrayList<>();
+//        for(Score example : list){
+//            if( TypeCount.contains(example.getTestType()) ){
+//
+//            }else{
+//                TypeCount.add(example.getTestType());
+//            }
+//        }
+//
+//
+//
+//        JSONArray jsonArrayScoreByType = new JSONArray();
+//        for(String example : TypeCount){
+//           List<Score > l =  scoreRepository.findAllByUserIdAndAndTestType(userId,example);
+//           JSONObject jsonObjecScoreByType = new JSONObject();
+//            jsonObjecScoreByType.put("type",example);
+//            jsonObjecScoreByType.put("count",l.size());
+//           jsonArrayScoreByType.put(jsonObjecScoreByType);
+//        }
+//
+//        jsonObject.put("typeAnaly",jsonArrayScoreByType);
+//        jsonObject.put("testScore",jsonArrayScore);
+
+
+         //封装testScore
+        int count = (int)testRepository.count();
+        JSONArray jsonArray = new JSONArray();
+        ArrayList<String> arrayListScore = new ArrayList<>(); //存放score
+        ArrayList<String> arrayListTestTime = new ArrayList<>(); //存放TestTime
+        for( Integer i=1; i<=count;i++ ){
+           // System.out.println(i);
+            JSONObject jsonObject1 = new JSONObject(); //存放examname
+            ExamPaper examPaper = testRepository.findByExaminationId(i.toString());
+            jsonObject1.put("examName",examPaper.getExaminationName());
+
+            arrayListScore.clear();
+            arrayListTestTime.clear();
+            List<Score> listscore = scoreRepository.findAllByUserIdAndExaminationId(userId,i.toString());
+            for(Score sc: listscore ){
+                arrayListScore.add(sc.getExaminationScore());
+                arrayListTestTime.add(sc.getTestTime());
+
+            }
+            jsonObject1.put("score",arrayListScore);
+            jsonObject1.put("testTime",arrayListTestTime);
+            jsonArray.put(jsonObject1);
         }
-        //typeAnaly 封装
+
+
+        //封装 typeanalysis
+        JSONArray jsonArrayScoreByType = new JSONArray();
         ArrayList<String > TypeCount= new ArrayList<>();
         for(Score example : list){
             if( TypeCount.contains(example.getTestType()) ){
-
             }else{
                 TypeCount.add(example.getTestType());
             }
         }
 
-
-
-        JSONArray jsonArrayScoreByType = new JSONArray();
         for(String example : TypeCount){
            List<Score > l =  scoreRepository.findAllByUserIdAndAndTestType(userId,example);
-           JSONObject jsonObjecScoreByType = new JSONObject();
-            jsonObjecScoreByType.put("type",example);
-            jsonObjecScoreByType.put("count",l.size());
-           jsonArrayScoreByType.put(jsonObjecScoreByType);
-        }
+            List<Score > l =  scoreRepository.findAllByUserIdAndAndTestType(userId,example);
+            JSONObject jsonObjecScoreByType = new JSONObject();
 
+            jsonObjecScoreByType.put("count",l.size());
+            if( example.equals("1") ){
+                jsonObjecScoreByType.put("typeName",ExamType.Depression.getName());
+            }else if(  example.equals("2")|| example.equals("3")   ){
+                jsonObjecScoreByType.put("typeName",ExamType.anxious.getName());
+            }else{
+                return jsonUtil.JsonPackage(1,"试题类型出错");
+            }
+            jsonArrayScoreByType.put(jsonObjecScoreByType);
+        }
+        jsonObject.put("allTestTime",testTime);
+        jsonObject.put("testScore",jsonArray);
         jsonObject.put("typeAnaly",jsonArrayScoreByType);
-        jsonObject.put("testScore",jsonArrayScore);
-        jsonObject.put("testTime",testTime);
+
+
         return jsonUtil.JsonPackage(0,jsonObject);
         //return jsonUtil.JsonPackage(0,list);
 
