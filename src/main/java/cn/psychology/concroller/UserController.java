@@ -297,8 +297,7 @@ public class UserController {
             }
 
         }
-        resjson.put("comNews", hasNotReadCommentss);
-        return jsonUtil.JsonPackage(0, resjson);
+        return jsonUtil.JsonPackage(0, hasNotReadCommentss);
     }
 
 
