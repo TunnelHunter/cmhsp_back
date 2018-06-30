@@ -47,6 +47,12 @@ public class CombUserSysImpl implements CombUserSysService {
         combineSysRepository.save(combUserSysNews);
         return "successful";
     }
+    //获取我的所有系统消息
+    public List<CombUserSysNews> findByUserId(int id){
+        List<CombUserSysNews>  list = combineSysRepository.findByUserId(id);
+
+        return list;
+    }
 
 
 }

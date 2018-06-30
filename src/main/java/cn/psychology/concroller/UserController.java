@@ -143,7 +143,7 @@ public class UserController {
 
     }
 
-    //获取我的未读系统消息
+    //获取我的所有系统消息
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/CMHSP/userGetsysMessage", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String usergetmessage(@RequestBody LinkedHashMap<String, Object> ob) {
@@ -151,7 +151,7 @@ public class UserController {
         com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
         int userId = Integer.parseInt(json.get("userID").toString());
 
-        List<CombUserSysNews> list = combUserSys.findHasNotReadByUserId(userId);
+        List<CombUserSysNews> list = combUserSys.findByUserId(userId);
         JSONArray jsonArray = new JSONArray();
         for (CombUserSysNews attribute : list) {
             JSONObject Reslist = new JSONObject();
@@ -266,6 +266,38 @@ public class UserController {
         return jsonUtil.JsonPackage(0, reslist);
 
     }
+
+    //获取我的未读评论消息
+    @PreAuthorize("hasRole('USER')")
+    @RequestMapping(value = "/CMHSP/userGetComments", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    public String usergetcomments(@RequestBody LinkedHashMap<String, Object> ob) {
+        JSONObject resjson = new JSONObject();
+        String str = JSON.toJSONString(ob);
+        com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
+        int userId = Integer.parseInt(json.get("userId").toString());
+        //我的评论消息
+        List<Social> socialsList = socialRepository.findAllByUserId(userId);
+        int socialListSize = socialsList.size();
+        JSONArray hasNotReadComments = new JSONArray();
+        ArrayList<Object> hasNotReadCommentss = new ArrayList<>();
+        for (int i = 0; i < socialListSize; i++) {
+            List<Social.Comments> commentsList = socialsList.get(i).getComments();
+            int commentsListSize = commentsList.size();
+            for (int j = 0; j < commentsListSize; j++) {
+                //if (commentsList.get(j).getCommentType().equals(0)) {
+                    JSONObject jsonObject = new JSONObject();
+                    hasNotReadCommentss.add(commentsList.get(j));
+                    //jsonObject.put("commentsContext",commentsList.get(j));
+                    //hasNotReadComments.put(jsonObject);
+
+               // }
+            }
+
+        }
+        resjson.put("comNews", hasNotReadCommentss);
+        return jsonUtil.JsonPackage(0, resjson);
+    }
+
 
 }
 

@@ -1,6 +1,7 @@
 package cn.psychology.Impl;
 
 
+import cn.psychology.Util.SysnewsStatus;
 import cn.psychology.dao.FavoriteRepository;
 import cn.psychology.dao.SocialRepository;
 import cn.psychology.dao.UserRepository;
@@ -76,10 +77,10 @@ public class SocialImpl implements SocialService {
         if (social.getComments()!=null) {
             ArrayList a = social.getComments();
             Social.Comments nc = social.new Comments();
-            nc.setCommentType(1);
             nc.setCuserId(cuid);
             nc.setCommentData(cd);
             nc.setCommentTime(ct);
+            nc.setCommentType(SysnewsStatus.hasnotRead.getIndex());
             a.add(nc);
             social.setComments(a);
             socialRepository.save(social);
@@ -90,6 +91,7 @@ public class SocialImpl implements SocialService {
             jsonObject.put("cuserId",cuid);
             jsonObject.put("commentData",cd);
             jsonObject.put("commentTime",ct);
+            jsonObject.put("commentType",SysnewsStatus.hasnotRead.getIndex());
             a1.add(0,jsonObject);
             social.setComments(a1);
             socialRepository.save(social);

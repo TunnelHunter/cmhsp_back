@@ -10,4 +10,5 @@ public interface CombineSysRepository extends JpaRepository<CombUserSysNews,Inte
 public List<CombUserSysNews> findAllByIdAndStatusOrderById(int id, int status);
     public List<CombUserSysNews> findAllByUserIdAndStatusOrderById(int id,int status);
     public CombUserSysNews findById(int id);//主键查询
+    public List<CombUserSysNews> findByUserId(Integer userId);
 }
