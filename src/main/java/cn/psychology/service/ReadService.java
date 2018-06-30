@@ -81,7 +81,7 @@ public class ReadService {
         Criteria cr = new Criteria();
         Query query = new Query(cr.orOperator(Criteria.where("readAuthor").regex(".*"+keyWord+".*")
                         .and("readType").is(readType)
-                ,Criteria.where("readContext").regex(".*"+keyWord+".*")
+                ,Criteria.where("readTitle").regex(".*"+keyWord+".*")
                         .and("readType").is(readType)));
         List<ReadTable> readTable = mongoTemplate.find(query, ReadTable.class);
         return readTable;

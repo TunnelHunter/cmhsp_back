@@ -221,6 +221,7 @@ public class SocailController {
         Integer uid =ob2.getInteger("userId");
         String  stext =ob2.get("textData").toString();
         String atime =ob2.get("socialAddTime").toString();
+
         socialService.addsocial(uid,simg,stext,atime);
         return new RespEntity(RespCode.SUCCESS);
     }
