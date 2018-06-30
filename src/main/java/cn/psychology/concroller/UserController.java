@@ -76,6 +76,7 @@ public class UserController {
             return "用户：" + name + "已被注册";
         }
     }
+
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/CMHSP/userUpdate", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String Update(@RequestBody User user) {
@@ -149,7 +150,7 @@ public class UserController {
     public String usergetmessage(@RequestBody LinkedHashMap<String, Object> ob) {
         String str = JSON.toJSONString(ob);
         com.alibaba.fastjson.JSONObject json = JSON.parseObject(str);
-        int userId = Integer.parseInt(json.get("userID").toString());
+        int userId = Integer.parseInt(json.get("userId").toString());
 
         List<CombUserSysNews> list = combUserSys.findHasNotReadByUserId(userId);
         JSONArray jsonArray = new JSONArray();
@@ -215,6 +216,7 @@ public class UserController {
         return jsonUtil.JsonPackage(0, resjson);
 
     }
+
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "CMHSP/userClearNews", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String userClearNews(@RequestBody LinkedHashMap<String, Object> ob) {
@@ -257,6 +259,7 @@ public class UserController {
         resjson.put("context", "clear news  success");
         return jsonUtil.JsonPackage(0, resjson);
     }
+
     @PreAuthorize("hasRole('USER')")
     @RequestMapping(value = "/CMHSP/userFavorite", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public String getUserFavorite(@RequestBody User user) {
