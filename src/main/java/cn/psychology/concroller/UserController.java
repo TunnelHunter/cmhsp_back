@@ -11,6 +11,8 @@ import cn.psychology.Util.SysnewsStatus;
 import cn.psychology.dao.SocialRepository;
 import cn.psychology.dao.UserRepository;
 import cn.psychology.entity.*;
+import cn.psychology.secutity.SysUser;
+import cn.psychology.secutity.SysUserRepository;
 import cn.psychology.service.UserService;
 import com.alibaba.fastjson.JSON;
 import org.json.JSONArray;
@@ -39,6 +41,8 @@ public class UserController {
     @Autowired
     private FavoriteImpl favorite;
 
+    @Autowired
+    private SysUserRepository sysUserRepository;
     private JsonUtil jsonUtil = new JsonUtil();
 
     @RequestMapping("/user/{id}")
@@ -87,6 +91,9 @@ public class UserController {
 
                         ) {
                     Resjson.put("pwd", "修改成功");
+                    SysUser sysUser = sysUserRepository.findByUsername(user.getusername());
+                    sysUser.setPassword(user.getuserpwd());
+                    sysUserRepository.save(sysUser);
                     userData.setuserpwd(user.getuserpwd());
                 }
                 if ((!userData.getSignature().equals(user.getSignature())
