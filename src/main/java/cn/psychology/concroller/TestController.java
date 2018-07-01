@@ -69,7 +69,11 @@ public class TestController {
 
     public  String setScore(@RequestBody Score score) {
 
-
+        if( score.getExaminationId().toString().equals("1") ){
+            score.setTestType(Integer.toString(ExamType.Depression.getIndex()));
+        }else{
+            score.setTestType(Integer.toString(ExamType.anxious.getIndex()));
+        }
 
                  scoreRepository.save(score);
          return jsonUtil.JsonPackage(0,"successful");
