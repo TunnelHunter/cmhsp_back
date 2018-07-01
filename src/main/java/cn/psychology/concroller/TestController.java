@@ -192,7 +192,7 @@ public class TestController {
 
         for(String example : TypeCount){
            List<Score > l =  scoreRepository.findAllByUserIdAndAndTestType(userId,example);
-            List<Score > l =  scoreRepository.findAllByUserIdAndAndTestType(userId,example);
+            //List<Score > l =  scoreRepository.findAllByUserIdAndAndTestType(userId,example);
             JSONObject jsonObjecScoreByType = new JSONObject();
 
             jsonObjecScoreByType.put("count",l.size());
