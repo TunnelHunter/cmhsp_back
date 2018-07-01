@@ -50,6 +50,7 @@ public class SocialImpl implements SocialService {
 
     }
     public void  addsocial(Integer uid,String img,String text,String addtime){
+        ArrayList nullArrayList = new ArrayList();
         if(socialRepository.count()==0){
             Social social =new Social();
             social.setuserId(uid);
@@ -57,6 +58,7 @@ public class SocialImpl implements SocialService {
             social.settextData(text);
             social.setsocialAddTime(addtime);
             social.setsocialId(1);
+            social.setComments(nullArrayList);
             socialRepository.save(social);}
         else{
             List<Social> list1 = socialRepository.findAll();
@@ -67,6 +69,7 @@ public class SocialImpl implements SocialService {
             social.settextData(text);
             social.setsocialAddTime(addtime);
             social.setsocialId(o1.getsocialId()+1);
+            social.setComments(nullArrayList);
             socialRepository.save(social);}
     }
 
